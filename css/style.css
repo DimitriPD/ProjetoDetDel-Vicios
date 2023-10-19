@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 16px;
+}
+
+/* Cabeçalho */
+header {
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid black;
+    align-items: center;
+    padding: 20px;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+}
+
+.list-item {
+    margin: 0 20px;
+}
+
+/* Cabeçalho */
