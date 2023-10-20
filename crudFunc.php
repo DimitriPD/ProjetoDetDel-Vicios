@@ -1,5 +1,5 @@
 <?php   
-    function selectFromDb (mysqli $conn, string $atributos, string $tabela, string $condicao = null, string $ordena = null) {
+    function selectFromDb (mysqli $conn, string $atributos, string $tabela, string $condicao = null, string $ordena = null, int $limita = null) {
         try {
             $sql = "SELECT $atributos FROM $tabela ";
 
@@ -8,7 +8,11 @@
             }
 
             if ($ordena !== null) {
-                $sql .= "ORDER BY $ordena";
+                $sql .= "ORDER BY $ordena ";
+            }
+
+            if ($limita !== null) {
+                $sql .= "LIMIT $limita ";
             }
 
             $result = mysqli_query($conn, $sql);
@@ -27,10 +31,17 @@
 
     function insertFromDb (mysqli $conn, string $tabela, string $valores) {
         try {
-            $id = 14;
-            $sql = "INSERT INTO $tabela values ($id, $valores)";
-            $result = mysqli_query($conn, $sql);
-            $linhas = mysqli_affected_rows( $conn );
+            $codUsuarioAnterior = selectFromDb($conn, 'cod_usuario', 'tb_usuarios', null, 'cod_usuario desc', 1);
+                
+            if ($codUsuarioAnterior) {
+                while ($row = mysqli_fetch_assoc($codUsuarioAnterior)) {
+                    settype($row['cod_usuario'],'integer');
+                    $id = $row['cod_usuario'] + 1;
+                }
+            }
+
+            $sql = "INSERT INTO $tabela VALUES ($id, $valores)";
+            return mysqli_query($conn, $sql);
         } catch (Exception $e) {
             echo"Erro ao inserir no Banco: " . $e->getMessage();
         }

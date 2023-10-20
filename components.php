@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="./css/usuarios.css">
     
     <link rel="shortcut icon" href="./img/icones/detdelunity.jpeg" type="image/x-icon">
-    <script src="./js/script.js" defer></script>
 
     <title>Projeto DetDelDel</title>
 </head>
