@@ -6,15 +6,11 @@
 
 .card-usuario {
     margin: 50px 20px;
-    width: 400px;
+    width: 500px;
     font-size: 1.3rem;
     padding: 20px;
     border: 3px solid black;
     border-radius: 20px;
-}
-
-.card-usuario-item {
-    display: flex;
 }
 
 .btn-usuarios-area {
@@ -25,6 +21,36 @@
 }
 
 .btn-usuarios {
+    cursor: pointer;
+    font-size: 1rem;
     margin: 0 10px;
     padding: 8px 16px;
+    text-decoration: none;
+    color: black;
+    border: 1px solid black;
+}
+    
+.confirma-deletar-area {
+    position: fixed;
+    background-color: rgba(108, 122, 137, .7);
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    width: 100%;
+    height: 100vh;
+}
+
+
+.confirma-deletar {
+    background-color: white;
+    border: 5px solid black;
+    padding: 20px;
+    opacity: 2;
+}
+
+.escondido {
+    display: none;
 }

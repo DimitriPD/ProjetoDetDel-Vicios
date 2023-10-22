@@ -1,10 +1,8 @@
-/* Formulario */
-
 .form-area {
     font-size: 1.5rem;
     display: flex;
     flex-direction: column;
-    margin: 100px auto;
+    margin: 50px auto;
     width: 50%;
     padding: 30px;
     border: 5px solid black;
@@ -15,7 +13,9 @@
 .form-header {
     font-size: 1.5em;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
 }
 
@@ -41,13 +41,13 @@
     width: 100%;
     padding: 5px 0;
     padding-left: 20px;
-
 }
 
 .form-item:has(> .item_duplo) {
     display: flex;
     flex-direction: row;
     align-items: end;
+    flex-wrap: wrap;
     justify-content: space-between;
     /* grid-template-columns: 1fr 1fr; */
 }
@@ -61,7 +61,7 @@
 }
 
 .aviso-erro {
-    background-image: linear-gradient(45deg, red 40%, white);
+    background-image: linear-gradient(45deg, red 100%, white 10%);
     color: white;
     font-size: 1rem;
     margin :5px 0px;
@@ -102,9 +102,3 @@
     cursor: pointer;
 
 }
-
-.esconde-form {
-    display: none;
-}
-
-/* Formulario */

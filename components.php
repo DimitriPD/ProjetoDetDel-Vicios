@@ -15,27 +15,29 @@
     include_once('./connection.php');  
     include_once('./crudFunc.php');  
 
-    $header = '
-    <header>
-        <div class="logo-header">
-            <h1>Logo</h1>
-        </div>
+    // Cria o header da página, assim não tem que criar um header em cada página
+    function createHeader(array $links) {
+        echo "
+            <header>
+                <div class='logo-header'>
+                    <h1>Logo</h1>
+                </div>
+        
+                <nav>
+                    <ul class='nav-list'>";
+                        foreach ($links as $link) {
+                            $link =  ucfirst($link);
+                            echo "<li class='list-item'>
+                                <a href='./$link.php'>$link</a>
+                            </li>";
+                        }
+                    echo "</ul>
+                </nav>
+            </header> 
+        ";
+    }
 
-        <nav>
-            <ul class="nav-list">
-                <li class="list-item">
-                    <a href="./index.php">Home</a>
-                </li>
-                <li class="list-item">
-                    <a href="./formulario.php">Formulario</a>
-                </li>
-                <li class="list-item">
-                    <a href="./usuarios.php">Usuários</a>
-                </li>
-            </ul>
-        </nav>
-    </header>';
-
+    // Cria o footer da página, assim não tem que criar um header em cada página
     $footer = 
     '<footer>
         <p>testessssssssssss</p>

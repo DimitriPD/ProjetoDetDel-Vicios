@@ -1,23 +1,3 @@
-function mudaForm() {
-    document.querySelectorAll('.form-header').forEach(element => {
-        element.classList.toggle('esconde-form')
-    });
-
-    document.querySelectorAll('.form').forEach(element => {
-        element.classList.toggle('esconde-form')
-    });
-
-    mudaFormText()
-}
-
-function mudaFormText() {
-    if (document.querySelectorAll('.form-header')[0].classList.contains('esconde-form')) {
-        document.querySelector('.btn-muda-form').innerHTML = 'Entrar'
-    } else {
-        document.querySelector('.btn-muda-form').innerHTML = 'Cadastrar-se' 
-    }
-}
-
 function mostraSenha(id_input, id_botao) {
     if (document.querySelector(`#${id_input}`).type === 'password') {
         document.querySelector(`#${id_input}`).type = 'text'
@@ -42,19 +22,56 @@ function checkEmail(email) {
     return rgx.test(email)
 } 
 
-let p_senha = null
+function checkData(data) {
+    const anoAtual = new Date()
+    const dataSep = data.split("-")
+    const dia = dataSep[0]
+    const mes = dataSep[1]
+    const ano = dataSep[2]
+
+    if (data.length < 10)  {
+        return false
+    }
+
+    if (mes < 0 || mes > 12) {
+        return false
+    }
+
+    if (ano > anoAtual.getFullYear() ||  ano < 1913) {
+        return false
+    }
+
+    if (dia <= 0 || dia > 31) {
+        return false
+    }
+
+    if ( (dia>=30) && (mes==2) ){
+        return false;
+    }
+
+    if ( (dia==29) && (mes==2) && ( (ano % 4) != 0 ) ){
+        return false;
+    }
+
+    if ( (dia==31) && ( (mes==2) || (mes==4) || (mes==6) || (mes==9) || (mes==11)  ) ){
+        return false;
+    }
+    return true
+}
+
 let p_email = null
+let p_senha = null
+let p_dataNasc = null
 const form_cadastra = document.querySelector("#form-cadastra");
 form_cadastra.addEventListener('submit', (event) => {
-    event.preventDefault()    
-
-    const usuario = document.querySelector('#id_nome_usuario_cadastrar').value
+    const nome_usuario = document.querySelector('#id_nome_usuario_cadastrar').value
     const email = document.querySelector('#id_email').value
-    const senha = document.querySelector('#id_senha_cadastrar').value
-    const nascimento = document.querySelector('#id_data_nascimento').value
+    const senha_hash = document.querySelector('#id_senha_cadastrar').value
+    const data_nascimento = document.querySelector('#id_data_nascimento').value
 
-    if (usuario.trim() === '' || email.trim() === '' || senha.trim() === '' || nascimento.trim() === '') {
+    if (nome_usuario.trim() === '' || email.trim() === '' || senha_hash.trim() === '' || data_nascimento.trim() === '') {
         alert("Preencha todos os campos!")
+        event.preventDefault()   
         return false
     } 
 
@@ -62,18 +79,20 @@ form_cadastra.addEventListener('submit', (event) => {
         if (p_email === null) {
             p_email = document.createElement('p')
             p_email.className = 'aviso-erro'
-            p_email.innerHTML = 'Email inválido!.'
+            p_email.innerHTML = 'Email inválido!'
             document.querySelector('.aviso-email').appendChild(p_email)
             return false
+              
         }
         return false
     }
     
-    if (senha.length < 6) {
+    if (senha_hash.length < 6) {
+        event.preventDefault()   
         if (p_senha === null) {
             p_senha = document.createElement('p')
             p_senha.className = 'aviso-erro'
-            p_senha.innerHTML = 'Senha deve ter no mínimo 6 dígitos.'
+            p_senha.innerHTML = 'Senha deve ter no mínimo 6 dígitos!'
             document.querySelector('.aviso-senha').appendChild(p_senha)
             return false
         }
@@ -81,9 +100,19 @@ form_cadastra.addEventListener('submit', (event) => {
         return false
     }
 
-    alert("aaaaaaaaaaaaaa")
+    if (!checkData(data_nascimento)) {
+        event.preventDefault()   
+        if (p_dataNasc === null) {
+            p_dataNasc = document.createElement('p')
+            p_dataNasc.className = 'aviso-erro'
+            p_dataNasc.innerHTML = 'Data inserida é inválida!.'
+            document.querySelector('.aviso-data').appendChild(p_dataNasc)
+            return false
+        }
+        return false
+    }
+    window.location.reload(true);
 })
-
 
 document.querySelector('#id_email').addEventListener('input', () => {
     if (p_email !== null) {
@@ -98,3 +127,24 @@ document.querySelector('#id_senha_cadastrar').addEventListener('input', () => {
         p_senha = null
     } 
 })
+
+document.querySelector('#id_data_nascimento').addEventListener('input', () => {
+    if (p_dataNasc !== null) {
+        document.querySelector('.aviso-data').removeChild(p_dataNasc)
+        p_dataNasc = null
+    } 
+})
+
+function mascaraNasc(input) {
+    let nasc = input.value
+
+    if(isNaN(nasc[nasc.length - 1])){
+        
+        input.value = nasc.substring(0, nasc.length-1)
+        return
+    }
+    
+    input.setAttribute("maxlength", "10")
+    if (nasc.length == 2) input.value += "-" 
+    if (nasc.length == 5) input.value += "-" 
+}
