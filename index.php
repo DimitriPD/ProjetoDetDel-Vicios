@@ -30,17 +30,10 @@
             if ($res) {
                 if ($row = mysqli_fetch_assoc($res)) {
                     $_SESSION['id'] = session_id();
+                    $_SESSION['cod_usuario'] = $row['cod_usuario'];
                     $_SESSION['tipo_usuario'] = $row['cod_tipo_usuario'];
 
-                    if ($_SESSION['tipo_usuario'] == 1 || $_SESSION['tipo_usuario'] == 2) {
-                        header('Location: ./home.php');
-                    }
-                    if ($_SESSION['tipo_usuario'] == 3 ) {
-                        header('Location: ./home.php');
-                    }
-                    if ($_SESSION['tipo_usuario'] == 4 ) {
-                        header('Location: ./home.php');
-                    }
+                    header('Location: ./home.php');
                 };
             } else {
                 $_SESSION['msg-login-erro'] = 'Email ou Senha inválido!';

@@ -44,6 +44,7 @@
                     'tb_usuarios u, tb_cidades c, tb_estados e',
                     // Where
                     '(u.cod_cidade = c.cod_cidade AND c.cod_estado = e.cod_estado)',
+                    null,
                     // Order By
                     '(Código)'
                 );

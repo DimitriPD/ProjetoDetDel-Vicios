@@ -1,6 +1,6 @@
 <?php   
     // Funcao select from SQL
-    function selectFromDb (mysqli $conn, string $atributos, string $tabela, string $condicao = null, string $ordena = null, int $limita = null) {
+    function selectFromDb (mysqli $conn, string $atributos, string $tabela, string $condicao = null,  string $grupo = null, string $ordena = null, int $limita = null) {
         try { // Tenta realizar o select
             $sql = "SELECT $atributos FROM $tabela "; // sql minimo
 
@@ -8,10 +8,14 @@
                 $sql .= "WHERE $condicao "; // concatena $sql a cláusula WHERE
             }
 
+            
+            if ($grupo !== null) {
+                $sql .= "GROUP BY $grupo ";
+            }
+            
             if ($ordena !== null) { // caso queira add um ORDER BY
                 $sql .= "ORDER BY $ordena "; // concatena $sql a cláusula ORDER BY
             }
-
             if ($limita !== null) { // caso queira add um LIMIT
                 $sql .= "LIMIT $limita "; // concatena $sql a cláusula LIMIT
             }
