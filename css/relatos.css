@@ -1,0 +1,26 @@
+.relatos-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60%;
+    margin: 0 auto;
+    padding: 20px 0;
+    border-inline: 5px solid black;
+}
+
+.card-relatos {
+    font-size: 1.3rem;
+    padding: 0px 20px;
+    margin:  30px 0;
+    border-bottom: 3px solid rgba(0, 0, 0, .6);
+}
+
+.card-relato-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 3px solid rgba(0, 0, 0, .2);
+
+}
