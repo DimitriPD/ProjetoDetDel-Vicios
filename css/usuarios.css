@@ -28,8 +28,8 @@
 .card-usuario-item {
     display: flex;
     flex-wrap: wrap;
-    background-color: rebeccapurple;
-    padding: 10px;
+    border-bottom: 1px solid;
+    padding: 5px 0;
     width: 30%;
 }
 
