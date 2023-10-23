@@ -20,7 +20,7 @@
             return;
         }
 
-        createHeader(["home", "relatos","usuarios", "sair"]);
+        createHeader(["home", "relatos", "perguntas","usuarios", "sair"]);
     ?>
     
 
@@ -29,9 +29,9 @@
             <?php
                 // Faz um select from no Banco
                 $res = selectFromDb(
-                    $conn, //Conexao
+                    conn: $conn, //Conexao
                     // Inicio Atributos
-                    'u.cod_usuario as Código,  
+                    atributos: 'u.cod_usuario as Código,  
                     u.nome_usuario as Usuário,  
                     u.email as `E-mail`, u.senha_hash as Senha, 
                     u.data_nascimento as `Data de Nascimento`, 
@@ -41,34 +41,39 @@
                     // Fim Atributos
 
                     // Tabela(s)
-                    'tb_usuarios u, tb_cidades c, tb_estados e',
+                    tabela: 'tb_usuarios u, tb_cidades c, tb_estados e',
                     // Where
-                    '(u.cod_cidade = c.cod_cidade AND c.cod_estado = e.cod_estado)',
-                    null,
+                    condicao: '(u.cod_cidade = c.cod_cidade AND c.cod_estado = e.cod_estado)',
                     // Order By
-                    '(Código)'
+                    ordena: '(Código)'
                 );
                 
                 // Se tiver registro no Banco
                 if ($res) {
                     // Até a ultima linha
                     while($row = mysqli_fetch_assoc($res)) {
-                        echo "<div class='card-usuario'>";
-                            
+                        echo "
+                        <div class='card-usuario'>
+                            <div class='usuario-info'>";
                             // Pegar cada retornado $value = atributo usuado na funcao selectFromDb
-                            foreach ($row as $key => $value) {
-                                echo " 
-                                    <div class='card-usuario-item'>
-                                        <p>$key: $value</p>
-                                    </div> 
-                                ";
-                            };
-
-                            echo "<div class='btn-usuarios-area'>
+                                foreach ($row as $key => $value) {
+                                    echo " 
+                                        <div class='card-usuario-item'>
+                                            <p class='item-linha'>$key: </p>
+                                            <p class='item-linha'>$value</p>
+                                        </div> 
+                                    ";
+                                };
+                            
+                            echo "
+                            </div>
+                            <div class='btn-usuarios-area'>
                                 <a href='#' class='btn-usuarios'>Editar</a >
                                 <a href='?cod_usuario={$row['Código']}&usuario={$row['Usuário']}&esconde='' class='btn-usuarios'>Excluir</a >
                             </div>";
-                        echo "</div>";
+                        echo "
+                        </div>
+                        ";
                     }
                 } else {
                     return 'Nenhum registro encontrado';

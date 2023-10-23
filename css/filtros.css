@@ -1,0 +1,36 @@
+.header-relatos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}   
+
+.header-relatos h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.list-filtro-vicio {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 100%;
+    list-style: none;
+    justify-content: space-around;
+}
+
+.filtro-vicio-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    padding: 10px 5px;
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+}
+
+.filtro-vicio-item a{
+    text-align: center;
+    color: white;
+    text-decoration: none;
+}

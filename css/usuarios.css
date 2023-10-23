@@ -1,16 +1,40 @@
 .usuarios-area {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
 }
 
 .card-usuario {
-    margin: 50px 20px;
-    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 80%;
+    margin: 20px 0;
     font-size: 1.3rem;
     padding: 20px;
     border: 3px solid black;
     border-radius: 20px;
+}
+
+.usuario-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.card-usuario-item {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rebeccapurple;
+    padding: 10px;
+    width: 30%;
+}
+
+.item-linha {
+    padding:  5px 0;
 }
 
 .btn-usuarios-area {

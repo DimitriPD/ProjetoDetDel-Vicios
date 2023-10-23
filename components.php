@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="./css/formulario.css">
     <link rel="stylesheet" href="./css/usuarios.css">
     <link rel="stylesheet" href="./css/relatos.css">
+    <link rel="stylesheet" href="./css/filtros.css">
     
     <link rel="shortcut icon" href="./img/icones/detdelunity.jpeg" type="image/x-icon">
 
