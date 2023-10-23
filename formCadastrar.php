@@ -2,7 +2,7 @@
     session_start();
     include_once("./components.php");
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -49,24 +49,24 @@
         }
     ?>    
     
-    <div class="form-area">
+    <div class="form-area" > 
         <section class='form-header'>
             <h1>Cadastrar-se</h1>
         </section>
-        <form class='form ' id="form-cadastra" action="" method="POST" autocomplete="off">
+        <form class='form ' id="form-cadastra" action="" method="POST" autocomplete="off" >
             <div class="form-item">
                 <label for="id_nome_usuario_cadastrar">Nome: </label>
                 <input type="text" name="nome_usuario" id="id_nome_usuario_cadastrar" required>
             </div>
             <div class="form-item aviso-email">
+                
                 <label for="id_email">Email: </label>
                 <input type="text" name="email" id="id_email" required>
                 <?php
-                if (isset($_SESSION['msg-email-ja-cadastrado'])) {
-                    echo "<span class='msg-session'> {$_SESSION['msg-email-ja-cadastrado']} </span>";
-                    unset($_SESSION['msg-email-ja-cadastrado']);
-                }
-                    
+                    if (isset($_SESSION['msg-email-ja-cadastrado'])) {
+                        echo "<span class='session-email'> {$_SESSION['msg-email-ja-cadastrado']} </span>";
+                        unset($_SESSION['msg-email-ja-cadastrado']);
+                    } 
                 ?>
             </div>
             <div class="form-item aviso-senha">

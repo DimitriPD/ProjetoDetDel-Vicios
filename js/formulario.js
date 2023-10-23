@@ -70,12 +70,13 @@ form_cadastra.addEventListener('submit', (event) => {
     const data_nascimento = document.querySelector('#id_data_nascimento').value
 
     if (nome_usuario.trim() === '' || email.trim() === '' || senha_hash.trim() === '' || data_nascimento.trim() === '') {
-        alert("Preencha todos os campos!")
         event.preventDefault()   
+        alert("Preencha todos os campos!")
         return false
     } 
 
     if (!checkEmail(email)) {
+        event.preventDefault()   
         if (p_email === null) {
             p_email = document.createElement('p')
             p_email.className = 'aviso-erro'
