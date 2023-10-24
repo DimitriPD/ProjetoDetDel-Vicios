@@ -1,20 +1,27 @@
 <?php 
     session_start();
-    include_once("./components.php");
+    include_once(__DIR__ . "/../functions/index.php");
 ?>
  
 <!DOCTYPE html>
 <html lang="pt-br">
 
-<body>
-    <?php 
-        $dados = filter_input_array (INPUT_POST, FILTER_DEFAULT);
+<head>
+    <link rel="stylesheet" href="./formulario.css">
+    <link rel="stylesheet" href="../style.css">
+    <script src="./formulario.js" defer></script>
+</head>
 
+<body>
+    <?php    
+        $dados = filter_input_array (INPUT_POST, FILTER_DEFAULT);
+        
         if (!empty($dados)) {
+            $_SESSION['dados'] = $dados;
             // var_dump($dados);
             // Caso o email já esteja registrado no banco redireciona para a página de cadastro, com a msg "Email já registrado."
             if (selectFromDb($conn, 'email', 'tb_usuarios', "email = '{$dados['email']}'")) {
-                $_SESSION['msg-email-ja-cadastrado'] = "Email já registrado.";
+                $_SESSION['msg-email-ja-cadastrado'] = "Esse email já está sendo usado.";
                 header('Location: ./formCadastrar.php');
                 return;
             } else {
@@ -44,7 +51,7 @@
                 // Faz um insert into no banco
                 insertIntoDb($conn, 'tb_usuarios', $data);   
                 // Redireciona para página descrita
-                header('Location: ./index.php');
+                header('Location: ../index.php');
             }
         }
     ?>    
@@ -56,22 +63,43 @@
         <form class='form ' id="form-cadastra" action="" method="POST" autocomplete="off" >
             <div class="form-item">
                 <label for="id_nome_usuario_cadastrar">Nome: </label>
-                <input type="text" name="nome_usuario" id="id_nome_usuario_cadastrar" required>
+                <input type="text" name="nome_usuario" id="id_nome_usuario_cadastrar" required value=<?php 
+                    if (isset($_SESSION['dados']['nome_usuario'])) { 
+                        echo $_SESSION['dados']['nome_usuario']; 
+                        unset($_SESSION['dados']['nome_usuario']);
+                    } else {
+                        echo '';
+                    }
+                ?>>
             </div>
             <div class="form-item aviso-email">
                 
                 <label for="id_email">Email: </label>
-                <input type="text" name="email" id="id_email" required>
+                <input type="text" name="email" id="id_email" required value=<?php 
+                    if (isset($_SESSION['dados']['email'])) { 
+                        echo $_SESSION['dados']['email']; 
+                        unset($_SESSION['dados']['email']);
+                    } else {
+                        echo '';
+                    }
+                ?>>
                 <?php
                     if (isset($_SESSION['msg-email-ja-cadastrado'])) {
-                        echo "<span class='session-email'> {$_SESSION['msg-email-ja-cadastrado']} </span>";
+                        echo "<span class='aviso-erro'> {$_SESSION['msg-email-ja-cadastrado']} </span>";
                         unset($_SESSION['msg-email-ja-cadastrado']);
                     } 
                 ?>
             </div>
             <div class="form-item aviso-senha">
                 <label for="id_senha_cadastrar">Senha: </label>
-                <input type="password" name="senha" id="id_senha_cadastrar" class="esconde-senha" required>
+                <input type="password" name="senha" id="id_senha_cadastrar" class="esconde-senha" required value=<?php 
+                    if (isset($_SESSION['dados']['senha'])) { 
+                        echo $_SESSION['dados']['senha']; 
+                        unset($_SESSION['dados']['senha']);
+                    } else {
+                        echo '';
+                    }
+                ?>>
             </div>
 
             <div class="form-item">
@@ -81,7 +109,14 @@
             <div class="form-item aviso-data">
                 <div class="item_duplo ">
                     <label for="id_data_nascimento">Data de Nascimento: </label>
-                    <input type="text" name="data_nascimento" id="id_data_nascimento" oninput="mascaraNasc(this, event)" required>
+                    <input type="text" name="data_nascimento" id="id_data_nascimento" oninput="mascaraNasc(this, event)" required value=<?php 
+                    if (isset($_SESSION['dados']['data_nascimento'])) { 
+                        echo $_SESSION['dados']['data_nascimento']; 
+                        unset($_SESSION['dados']['data_nascimento']);
+                    } else {
+                        echo '';
+                    }
+                ?>>
                 </div>
 
                 <div class="item_duplo">
@@ -108,10 +143,9 @@
         </form>
 
         <section class="muda-form">
-            <a href="./index.php"> Entrar </a>
+            <a href="../index.php"> Entrar </a>
         </section>
     </div>
-    <script src="./js/formulario.js"></script>
 
 </body>
 </html>

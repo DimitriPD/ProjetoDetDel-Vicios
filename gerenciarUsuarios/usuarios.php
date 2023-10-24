@@ -1,26 +1,31 @@
 <?php
     session_start();
-    include('./components.php');
+    include('../functions/index.php');
     
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./usuarios.css">
+</head>
+
 <body >
     <?php
         if (!isset($_SESSION['id']) && !isset($_SESSION['tipo_usuario'])) {
             $_SESSION['msg'] = '<h1 class="session-error"> Necessário realizar Login para acessar a página! </h1>';
-            header('Location: ./index.php');
+            header('Location: ../index.php');
             return;
         }
 
         if ($_SESSION['tipo_usuario'] > 2) {
             $_SESSION['msg-bloqueante'] = '<h1 class="session-error"> Sem autorização para acessar essa página! </h1>';
-            header('Location: ./home.php');
+            header('Location: ../relatos/relatos.php');
             return;
         }
 
-        createHeader(["home", "relatos", "perguntas","usuarios", "sair"]);
+        createHeader($_SESSION['tipo_usuario']);
     ?>
     
 
