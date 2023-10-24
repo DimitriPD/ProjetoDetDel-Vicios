@@ -1,16 +1,20 @@
 <?php 
     session_start();
     ob_start();
-    include_once('./components.php');
+    include_once(__DIR__ . '/functions/index.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="./formulario/formulario.css" >
+    <link rel="stylesheet" href="./style.css">
+</head>
 
 <body>
     <?php
         if (isset($_SESSION['id'])) {
-            header('Location: ./home.php');
+            header('Location: ./relatos/relatos.php');
         }
     
         $dados = filter_input_array (INPUT_POST, FILTER_DEFAULT);
@@ -33,7 +37,7 @@
                     $_SESSION['cod_usuario'] = $row['cod_usuario'];
                     $_SESSION['tipo_usuario'] = $row['cod_tipo_usuario'];
 
-                    header('Location: ./home.php');
+                    header('Location: ./relatos/relatos.php');
                 };
             } else {
                 $_SESSION['msg-login-erro'] = 'Email ou Senha inválido!';
@@ -45,7 +49,7 @@
     ?>
     
     <div> 
-        <?php 
+        <?php
             if (isset($_SESSION['msg'])) {
                 echo $_SESSION['msg'];
                 unset($_SESSION['msg']);
@@ -88,7 +92,7 @@
         </form>       
 
         <section class="muda-form">
-            <a href="./formCadastrar.php"> Cadastrar-se </a>
+            <a href="formulario/formCadastrar.php"> Cadastrar-se </a>
         </section>
     </div>
     

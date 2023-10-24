@@ -32,7 +32,7 @@ header {
     margin: 0 20px;
 }
 
-.session-error, .session-success, .session-email {
+.session-error, .session-success{
     background-color: red;
     color: white;
     padding: 10px 0;
@@ -43,14 +43,7 @@ header {
     background-color: green;
 }
 
-.session-email {
-    width: 40%;
-    font-size: .8rem;
-    padding: 5px; 
-    text-align: start;
-    text-indent: 20px;
-    margin-top: 5px;
-}
+
 
  header + main.container  {
     margin-top: 60px;
