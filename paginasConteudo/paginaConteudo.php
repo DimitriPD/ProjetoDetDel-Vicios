@@ -12,7 +12,7 @@
 
 <body>
     <?php 
-        if (!isset($_SESSION['id']) && !isset($_SESSION['tipo_usuario'])) {
+        if (!isset($_SESSION['id'])) {
             $_SESSION['msg'] = '<h1 class="session-error"> Necessário realizar Login para acessar a página! </h1>';
             header('Location: ../index.php');
         }
