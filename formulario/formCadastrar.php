@@ -23,7 +23,7 @@
         $dados = filter_input_array (INPUT_POST, FILTER_DEFAULT);
         
         if (!empty($dados)) {
-            $_SESSION['dados'] = $dados;
+            $_SESSION['dadosCadastrar'] = $dados;
             // var_dump($dados);
             // Caso o email já esteja registrado no banco redireciona para a página de cadastro, com a msg "Email já registrado."
             if (selectFromDb($conn, 'email', 'tb_usuarios', "email = '{$dados['email']}'")) {
@@ -70,9 +70,9 @@
             <div class="form-item">
                 <label for="id_nome_usuario_cadastrar">Nome: </label>
                 <input type="text" name="nome_usuario" id="id_nome_usuario_cadastrar" required value=<?php 
-                    if (isset($_SESSION['dados']['nome_usuario'])) { 
-                        echo $_SESSION['dados']['nome_usuario']; 
-                        unset($_SESSION['dados']['nome_usuario']);
+                    if (isset($_SESSION['dadosCadastrar']['nome_usuario'])) { 
+                        echo $_SESSION['dadosCadastrar']['nome_usuario']; 
+                        unset($_SESSION['dadosCadastrar']['nome_usuario']);
                     } else {
                         echo '';
                     }
@@ -81,27 +81,30 @@
             <div class="form-item aviso-email">
                 
                 <label for="id_email">Email: </label>
-                <input type="text" name="email" id="id_email" required value=<?php 
-                    if (isset($_SESSION['dados']['email'])) { 
-                        echo $_SESSION['dados']['email']; 
-                        unset($_SESSION['dados']['email']);
+                <input type="text" name="email" id="id_email" oninput="mostraAvisoEmail(this)" required value=<?php 
+                // Mantem o que ja foi digitado
+                    if (isset($_SESSION['dadosCadastrar']['email'])) { 
+                        echo $_SESSION['dadosCadastrar']['email']; 
+                        unset($_SESSION['dadosCadastrar']['email']);
                     } else {
                         echo '';
                     }
                 ?>>
                 <?php
+                // Apareca a msg de email ja cadastrado
                     if (isset($_SESSION['msg-email-ja-cadastrado'])) {
-                        echo "<span class='aviso-erro'> {$_SESSION['msg-email-ja-cadastrado']} </span>";
+                        echo "<span class='aviso-erro-session'> {$_SESSION['msg-email-ja-cadastrado']} </span>";
                         unset($_SESSION['msg-email-ja-cadastrado']);
                     } 
                 ?>
             </div>
             <div class="form-item aviso-senha">
                 <label for="id_senha_cadastrar">Senha: </label>
-                <input type="password" name="senha" id="id_senha_cadastrar" class="esconde-senha" required value=<?php 
-                    if (isset($_SESSION['dados']['senha'])) { 
-                        echo $_SESSION['dados']['senha']; 
-                        unset($_SESSION['dados']['senha']);
+                <input type="password" name="senha" id="id_senha_cadastrar" oninput="mostraAvisoSenha(this)" class="esconde-senha" required value=<?php 
+                // Mantem o que ja foi digitado
+                    if (isset($_SESSION['dadosCadastrar']['senha'])) { 
+                        echo $_SESSION['dadosCadastrar']['senha']; 
+                        unset($_SESSION['dadosCadastrar']['senha']);
                     } else {
                         echo '';
                     }
@@ -115,10 +118,11 @@
             <div class="form-item aviso-data">
                 <div class="item_duplo ">
                     <label for="id_data_nascimento">Data de Nascimento: </label>
-                    <input type="text" name="data_nascimento" id="id_data_nascimento" oninput="mascaraNasc(this, event)" required value=<?php 
-                    if (isset($_SESSION['dados']['data_nascimento'])) { 
-                        echo $_SESSION['dados']['data_nascimento']; 
-                        unset($_SESSION['dados']['data_nascimento']);
+                    <input type="text" name="data_nascimento" id="id_data_nascimento" oninput="mascaraNasc(this, event), mostraAvisoDataNasc(this)" required value=<?php 
+                // Mantem o que ja foi digitado
+                    if (isset($_SESSION['dadosCadastrar']['data_nascimento'])) { 
+                        echo $_SESSION['dadosCadastrar']['data_nascimento']; 
+                        unset($_SESSION['dadosCadastrar']['data_nascimento']);
                     } else {
                         echo '';
                     }

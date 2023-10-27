@@ -27,6 +27,7 @@
         $dados = filter_input_array (INPUT_POST, FILTER_DEFAULT);
         
         if (!empty($dados)) {
+            $_SESSION['dadosLogin'] = $dados;
             $res = selectFromDb(
                 $conn, 
                 '
@@ -81,12 +82,26 @@
         <form class="form " action="" method="POST" autocomplete="off">
             <div class="form-item">
                 <label for="id_nome_usuario_entrar">Email: </label>
-                <input type="text" name="email"  required>
+                <input type="text" name="email"  required value=<?php 
+                    if (isset($_SESSION['dadosLogin']['email'])) {
+                        echo $_SESSION['dadosLogin']['email'];
+                        unset($_SESSION['dadosLogin']['email']);
+                    } else {
+                        echo '';
+                    };
+                ?>>
             </div>
 
             <div class="form-item">
                 <label for="id_senha_entrar">Senha: </label>
-                <input type="password" name="senha"required id="id_senha_entrar">
+                <input type="password" name="senha" required id="id_senha_entrar" value=<?php 
+                    if (isset($_SESSION['dadosLogin']['senha'])) {
+                        echo $_SESSION['dadosLogin']['senha'];
+                        unset($_SESSION['dadosLogin']['senha']);
+                    } else {
+                        echo '';
+                    };
+                ?>>
             </div>
 
             <div class="form-item">
