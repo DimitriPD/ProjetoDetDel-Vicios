@@ -11,6 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../img/icones/detdelunity.jpeg" type="image/x-icon">
 
+        <!-- link font family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Guntur:wght@300&family=Roboto:wght@100;300;500;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="./relatos.css">
     <link rel="stylesheet" href="../filtros.css">
@@ -24,11 +29,13 @@
             $_SESSION['msg'] = '<h1 class="session-error"> Necessário realizar Login para acessar a página! </h1>';
             header('Location: ../index.php');
         }
-        
-        createHeader($_SESSION['tipo_usuario']);
     ?>
 
     <main class="container">
+        <?php 
+            createHeader($_SESSION['tipo_usuario']);
+        ?>
+
         <div class="header-relatos">
             <h1>Relatos Feitos Pela Comunidade</h1>
             <?php 
