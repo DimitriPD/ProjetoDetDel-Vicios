@@ -138,4 +138,3 @@ form_cadastra.addEventListener('submit', (event) => {
         return false
     }
 })
-
