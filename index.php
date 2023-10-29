@@ -41,6 +41,12 @@
 
             if ($res) {
                 if ($row = mysqli_fetch_assoc($res)) {
+                    if ($row["email"] !== $dados['email'] || $row["senha"] !== $dados['senha']) {
+                        $_SESSION['msg-login-erro'] = 'Email ou Senha inválido!';
+                        header('Location: ./index.php');
+                        return;
+                    }
+
                     $_SESSION['id'] = session_id();
                     $_SESSION['cod_usuario'] = $row['cod_usuario'];
                     $_SESSION['tipo_usuario'] = $row['cod_tipo_usuario'];
