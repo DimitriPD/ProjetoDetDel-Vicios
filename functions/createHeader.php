@@ -53,7 +53,7 @@ function createHeader(string $tipo, string $nome='') {
             </nav>
 
             <div class='perfil-menu-nav'>
-                <div class='item-perfil'> <img src='https://placehold.co/400' alt='f'> </div>
+                <div class='item-perfil'> <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt=''> </div>
                 <div class='item-perfil'> $nome </div>
                 <div class='item-perfil '>
                     <a href='#' onclick='criaCardOpPerfil()'  class='opcoes-perfil'> 

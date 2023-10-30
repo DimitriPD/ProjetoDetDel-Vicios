@@ -32,7 +32,7 @@
             return;
         }
 
-        createHeader($_SESSION['tipo_usuario']);
+        createHeader($_SESSION['tipo_usuario'],$_SESSION['nome_usuario']);
     ?>
     
 
