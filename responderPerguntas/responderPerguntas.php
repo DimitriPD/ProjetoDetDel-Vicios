@@ -23,7 +23,7 @@
             header('Location: ../index.php');
         }
         
-        createHeader($_SESSION['tipo_usuario']);
+        createHeader($_SESSION['tipo_usuario'],$_SESSION['nome_usuario']);
     ?>
 </body>
 </html>
