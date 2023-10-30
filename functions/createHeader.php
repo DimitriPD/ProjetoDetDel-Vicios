@@ -1,6 +1,6 @@
 <?php 
 // Cria o header da página, assim não tem que criar um header em cada página
-function createHeader(string $tipo) {
+function createHeader(string $tipo, string $nome='') {
     $links = [
         ["../relatos/relatos.php", "../img/iconeMenuNav/iconeRelato","Relatos"],
         ["../perguntas/perguntas.php", "../img/iconeMenuNav/iconePerguntas","Perguntas"],
@@ -21,7 +21,6 @@ function createHeader(string $tipo) {
         array_push($links, ["../responderPerguntas/responderPerguntas.php",  "../img/iconeMenuNav/icone","Responder Perguntas"]);
     }
 
-    array_push($links, ["../sair.php", "../img/iconeMenuNav/icone","Sair"]);
     echo "
         <header> 
             <div class='logo-header'>
@@ -54,9 +53,29 @@ function createHeader(string $tipo) {
             </nav>
 
             <div class='perfil-menu-nav'>
-                    a
+                <div class='item-perfil'> <img src='https://placehold.co/400' alt='f'> </div>
+                <div class='item-perfil'> $nome </div>
+                <div class='item-perfil '>
+                    <a href='#' onclick='criaCardOpPerfil()'  class='opcoes-perfil'> 
+                        <div class='pontinho'></div>
+                    </a>
+                </div>
+            </div>
+
+            <div class='card-opcoes esconde'>
+                <ul>
+                    <li><a href='#'>Meu Perfil</a></li>
+                    <li><a href='#'>Mais</a></li>
+                    <li><a href='../sair.php' style='color: red;'>Sair</a></li>
+                </ul>
             </div>
         </header> 
     ";
 }
+?>
 
+<script>
+    function criaCardOpPerfil() {
+        document.querySelector('.card-opcoes').classList.toggle('esconde')
+    }
+</script>

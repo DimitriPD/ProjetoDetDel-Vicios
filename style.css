@@ -26,14 +26,13 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    padding: 20px 0;
+    padding: 20px 30px;
 
     width: 270px;
     height: 100vh;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
 
     color: white;
@@ -41,9 +40,11 @@ header {
 }
 
 .logo-header {
+    align-items: center;
+    justify-content: center;
     display: flex;
     flex-direction: row;
-    height: 20%;
+    height: 15%;
 }
 
 .logo-header .texto-simbolo {
@@ -56,7 +57,7 @@ header {
     flex-direction: column;
     align-items: center;
     text-transform: uppercase;
-    font-size: 1.7rem;
+    font-size: 1.875rem;
     line-height: 105%;
     padding-top: 5px;
 }
@@ -68,15 +69,17 @@ nav {
 .nav-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     list-style: none;
     height: 100%;
+    width: 100%;
+    font-size: 1.125rem;
 }
 
 .list-item {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 70%;
     padding-bottom: 30px;
 }
 
@@ -85,8 +88,14 @@ nav {
     align-items: start;
     color: white;
     text-decoration: none;
-    font-weight: 200;
+    font-weight: 600;
     width: 100%;
+    transition: .3s;
+}
+
+.list-item a:hover {
+    transform: scale(1.1);
+    border-bottom: 1px solid;
 }
 
 .list-item a .icone {
@@ -94,11 +103,86 @@ nav {
 }
 
 .perfil-menu-nav {
-    background-color: white;
     display: flex;
-    height: 5%;
-    padding: 20px 100px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
+
+.item-perfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+}
+
+.item-perfil img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+
+.opcoes-perfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    padding: 10px;
+}
+.pontinho {
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    margin: 0 5px;
+    border-radius: 50%;
+}
+.opcoes-perfil::after, .opcoes-perfil::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.card-opcoes {
+    position: absolute;
+    display: block;
+    width: 100%;
+    bottom: 50px;
+    left: 230px;
+    width: 100px;
+    color: black;
+    background-color: white;
+}
+
+.card-opcoes ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+
+.card-opcoes ul li {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, .7);
+    padding: 5px 0;
+    text-indent: 5px;
+}
+
+.card-opcoes ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+.esconde {
+    display: none;
+}
+
+/* Cabeçalho */
+
+
+
 
 .container {
     width: 70%;
