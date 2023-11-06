@@ -84,7 +84,7 @@
                             </div>
 
                             <a href="#" class='btn-publicar'>
-                                PUBLICAR
+                                Publicar
                             </a>
                         </div>
                     </div>
@@ -149,56 +149,49 @@
                 if ($resultado) {
                     while ($row = mysqli_fetch_assoc($resultado)) {
                         echo "
-                            <div class='relato-base'>
-                                <div class='foto-perfil'>
+                            <div class='card-relato'>
+                                <div class='foto-perfil-relato'>
                                     <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
                                 </div>
+                                <div class='header-relato'>
+                                    <div class='uptext'>
+                                        <p>";
+                                            if ($row['esta_anonimo'] == 1) {
+                                                echo "Anônimo";
+                                            } else {
+                                                echo $row['nome_usuario'];
+                                            }
+                                        echo "</p>
 
-                                <div class='card-relato'>
-                                    <div class='header-relato'>
-                                        <div class='uptext'>
-                                            <p>";
-                                                if ($row['esta_anonimo'] == 1) {
-                                                    echo "Anônimo";
-                                                } else {
-                                                    echo $row['nome_usuario'];
-                                                }
-                                            echo "</p>
-
-                                            <div class='identificacao-relato'>
-                                                <p>Identificação: </p>
-                                                <p>{$row['descricao_identificacao']}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class='downtext'>
-                                            <p> Sobre: </p>
-
-                                            <div class='sobre-vicios'>
-                                                <p>{$row['descricao_vicio']}</p>
-                                            </div>
+                                        <div class='identificacao-relato'>
+                                            <p>{$row['descricao_identificacao']}</p>
                                         </div>
                                     </div>
 
-                                    <div class='conteudo-relato'>
-                                        {$row['conteudo_relato']}
-                                        {$row['conteudo_relato']}
-                                        {$row['conteudo_relato']}
+                                    <div class='downtext'>
+                                        <div class='sobre-vicios'>
+                                            <p>{$row['descricao_vicio']}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='conteudo-relato'>
+                                    <div class='conteudo'>
                                         {$row['conteudo_relato']}
                                     </div>
 
-                                    <div class='footer-relato'>
-                                        <div class='data-cidade-relato'>
-                                            <p>{$row['nome_cidade']}</p>
-                                            <p>{$row['data_envio']}</p>
-                                        </div>
+                                    <div class='data-cidade-relato'>
+                                        <p>{$row['nome_cidade']}</p>
+                                        <p>{$row['data_envio']}</p>
+                                    </div>
+                                </div>
 
-                                        <div class='upvote-area'>
-                                            <p> {$row['upvotes']} </p>
-                                            <a href='#' class='upvote'>
-                                            
-                                            </a>
-                                        </div>
+                                <div class='footer-relato'>
+                                    <div class='upvote-area'>
+                                        <p> {$row['upvotes']} </p>
+                                        <a href='#' class='upvote'>
+                                            <div class='upvote-interno'></div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>";
