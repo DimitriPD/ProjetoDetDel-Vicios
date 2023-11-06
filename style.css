@@ -5,18 +5,17 @@
 }
 
 .session-error, .session-success{
-    background-color: red;
-    color: white;
+    color: red;
     padding: 10px 0;
     text-align: center;
 }
 
 .session-success {
-    background-color: green;
+    color: green;
 }
 
 body {
-    background-color: #D9D9D9;
+    background-color: #EEEEEE;
     font-size: 16px;
     font-family: 'Hind Guntur', sans-serif;
     font-family: 'Roboto', sans-serif;
@@ -45,7 +44,6 @@ header {
     justify-content: center;
     display: flex;
     flex-direction: row;
-    height: 15%;
 }
 
 .logo-header .texto-simbolo {
@@ -61,6 +59,16 @@ header {
     font-size: 1.875rem;
     line-height: 105%;
     padding-top: 5px;
+}
+
+.logo-header .texto-index {
+    font-size: 4rem;
+    padding-top: 50px;
+    padding-top: 20px;
+}
+
+.logo-header .texto-index p + p {
+    margin-top: 30px;
 }
 
 nav {
@@ -184,7 +192,7 @@ nav {
 
 
 .container {
-    width: 50%;
+    width: 56.25%;
     height: auto;
     margin: 0 auto;
     border-right: 2px solid black;
