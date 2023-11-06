@@ -58,38 +58,37 @@
         <div class="relatos-area">
             
             <div class='card-cria-relato'>
-                <div class="parte-superior">
                     <div class='foto-perfil'>
                         <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
                     </div>
                     <div class='campo-texo'>
-                        <textarea name="" id="" cols="100" rows="3" style='resize: none;' placeholder="Digite aqui seu relato..."></textarea>
+                        <textarea name="" id="" cols="100" rows="2" style='resize: none;' placeholder="Digite aqui seu relato..."></textarea>
+                        <div class="parte-inferior">
+                            <div class="escolhas-relato">
+                                <ul>
+                                    <li> <a href="#"> 
+                                        <img src="../img/iconeCriaRelato/iconeVicios.png" alt=""> 
+                                        <p>Vicíos</p>
+                                    </a> </li>
+
+                                    <li> <a href="#"> 
+                                        <img src="../img/iconeCriaRelato/iconeIdentificacao.png" alt="">
+                                        <p>Identificação</p>
+                                    </a> </li>
+
+                                    <li> <a href="#"> 
+                                        <img src="../img/iconeCriaRelato/iconeAnonimo.png" alt="">
+                                        <p>Anônimo</p>
+                                    </a> </li>
+                                </ul>
+                            </div>
+
+                            <a href="#" class='btn-publicar'>
+                                PUBLICAR
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="parte-inferior">
-                    <div class="escolhas-relato">
-                        <ul>
-                            <li> <a href="#"> 
-                                <img src="../img/iconeCriaRelato/iconeVicios.png" alt=""> 
-                                <p>Vicíos</p>
-                            </a> </li>
 
-                            <li> <a href="#"> 
-                                <img src="../img/iconeCriaRelato/iconeIdentificacao.png" alt="">
-                                <p>Identificação</p>
-                             </a> </li>
-
-                            <li> <a href="#"> 
-                                <img src="../img/iconeCriaRelato/iconeAnonimo.png" alt="">
-                                <p>Anônimo</p>
-                            </a> </li>
-                        </ul>
-                    </div>
-
-                    <a href="#" class='btn-publicar btn-publicar-relato'>
-                        PUBLICAR
-                    </a>
-                </div>
             </div>
 
             <?php 

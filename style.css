@@ -28,7 +28,7 @@ header {
     left: 0;
     padding: 20px 30px;
 
-    width: 13.6%;
+    width: 14%;
     height: 100vh;
 
     display: flex;
@@ -72,7 +72,7 @@ header {
 }
 
 nav {
-    height: 70%;
+    height: 68%;
 }
 
 .nav-list {
@@ -89,12 +89,12 @@ nav {
     display: flex;
     flex-direction: row;
     width: 70%;
-    padding-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .list-item a {
     display: flex;
-    align-items: start;
+    align-items: center;
     color: white;
     text-decoration: none;
     font-weight: 600;
@@ -193,9 +193,5 @@ nav {
 
 .container {
     width: 56.25%;
-    height: auto;
     margin: 0 auto;
-    border-right: 2px solid black;
-    border-left: 2px solid black;
-    background-color: white;
 }
