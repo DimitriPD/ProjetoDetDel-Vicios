@@ -11,11 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../img/icones/detdelunity.jpeg" type="image/x-icon">
 
-        <!-- link font family -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Guntur:wght@300&family=Roboto:wght@100;300;500;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="./relatos.css">
     <link rel="stylesheet" href="../filtros.css">
@@ -63,38 +58,37 @@
         <div class="relatos-area">
             
             <div class='card-cria-relato'>
-                <div class="parte-superior">
                     <div class='foto-perfil'>
                         <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
                     </div>
                     <div class='campo-texo'>
-                        <textarea name="" id="" cols="100" rows="3" style='resize: none;' placeholder="Digite aqui seu relato..."></textarea>
+                        <textarea name="" id="" cols="100" rows="2" style='resize: none;' placeholder="Digite aqui seu relato..."></textarea>
+                        <div class="parte-inferior">
+                            <div class="escolhas-relato">
+                                <ul>
+                                    <li> <a href="#"> 
+                                        <img src="../img/iconeCriaRelato/iconeVicios.png" alt=""> 
+                                        <p>Vicíos</p>
+                                    </a> </li>
+
+                                    <li> <a href="#"> 
+                                        <img src="../img/iconeCriaRelato/iconeIdentificacao.png" alt="">
+                                        <p>Identificação</p>
+                                    </a> </li>
+
+                                    <li> <a href="#"> 
+                                        <img src="../img/iconeCriaRelato/iconeAnonimo.png" alt="">
+                                        <p>Anônimo</p>
+                                    </a> </li>
+                                </ul>
+                            </div>
+
+                            <a href="#" class='btn-publicar'>
+                                Publicar
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="parte-inferior">
-                    <div class="escolhas-relato">
-                        <ul>
-                            <li> <a href="#"> 
-                                <img src="../img/iconeCriaRelato/iconeVicios.png" alt=""> 
-                                <p>Vicíos</p>
-                            </a> </li>
 
-                            <li> <a href="#"> 
-                                <img src="../img/iconeCriaRelato/iconeIdentificacao.png" alt="">
-                                <p>Identificação</p>
-                             </a> </li>
-
-                            <li> <a href="#"> 
-                                <img src="../img/iconeCriaRelato/iconeAnonimo.png" alt="">
-                                <p>Anônimo</p>
-                            </a> </li>
-                        </ul>
-                    </div>
-
-                    <a href="#" class='btn-publicar btn-publicar-relato'>
-                        PUBLICAR
-                    </a>
-                </div>
             </div>
 
             <?php 
@@ -155,56 +149,49 @@
                 if ($resultado) {
                     while ($row = mysqli_fetch_assoc($resultado)) {
                         echo "
-                            <div class='relato-base'>
-                                <div class='foto-perfil'>
+                            <div class='card-relato'>
+                                <div class='foto-perfil-relato'>
                                     <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
                                 </div>
+                                <div class='header-relato'>
+                                    <div class='uptext'>
+                                        <p>";
+                                            if ($row['esta_anonimo'] == 1) {
+                                                echo "Anônimo";
+                                            } else {
+                                                echo $row['nome_usuario'];
+                                            }
+                                        echo "</p>
 
-                                <div class='card-relato'>
-                                    <div class='header-relato'>
-                                        <div class='uptext'>
-                                            <p>";
-                                                if ($row['esta_anonimo'] == 1) {
-                                                    echo "Anônimo";
-                                                } else {
-                                                    echo $row['nome_usuario'];
-                                                }
-                                            echo "</p>
-
-                                            <div class='identificacao-relato'>
-                                                <p>Identificação: </p>
-                                                <p>{$row['descricao_identificacao']}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class='downtext'>
-                                            <p> Sobre: </p>
-
-                                            <div class='sobre-vicios'>
-                                                <p>{$row['descricao_vicio']}</p>
-                                            </div>
+                                        <div class='identificacao-relato'>
+                                            <p>{$row['descricao_identificacao']}</p>
                                         </div>
                                     </div>
 
-                                    <div class='conteudo-relato'>
-                                        {$row['conteudo_relato']}
-                                        {$row['conteudo_relato']}
-                                        {$row['conteudo_relato']}
+                                    <div class='downtext'>
+                                        <div class='sobre-vicios'>
+                                            <p>{$row['descricao_vicio']}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='conteudo-relato'>
+                                    <div class='conteudo'>
                                         {$row['conteudo_relato']}
                                     </div>
 
-                                    <div class='footer-relato'>
-                                        <div class='data-cidade-relato'>
-                                            <p>{$row['nome_cidade']}</p>
-                                            <p>{$row['data_envio']}</p>
-                                        </div>
+                                    <div class='data-cidade-relato'>
+                                        <p>{$row['nome_cidade']}</p>
+                                        <p>{$row['data_envio']}</p>
+                                    </div>
+                                </div>
 
-                                        <div class='upvote-area'>
-                                            <p> {$row['upvotes']} </p>
-                                            <a href='#' class='upvote'>
-                                            
-                                            </a>
-                                        </div>
+                                <div class='footer-relato'>
+                                    <div class='upvote-area'>
+                                        <p> {$row['upvotes']} </p>
+                                        <a href='#' class='upvote'>
+                                            <div class='upvote-interno'></div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>";

@@ -63,67 +63,74 @@
             
         }
     ?>
-    
-    <div> 
-        <?php
-            if (isset($_SESSION['msg'])) {
-                echo $_SESSION['msg'];
-                unset($_SESSION['msg']);
-            }
-            if (isset($_SESSION['msg-login-erro'])) {
-                echo "<h1 class='session-error'> {$_SESSION['msg-login-erro']} </h1>";
-                unset($_SESSION['msg-login-erro']);
-            };
-            if (isset( $_SESSION['succes-cadastro'])) {
-                echo "<h1 class='session-success'> {$_SESSION['succes-cadastro']} </h1>";
-                unset($_SESSION['succes-cadastro']);
-            };
-        ?>    
-    </div>
-    
-    <div class="form-area">
-        <!-- classe 'esconde-form' define o display como none -->
-        <section class='form-header '>
-            <h1>Entrar</h1>
-        </section>
+    <div class="container-form">
+        <div class='logo-header'>
+            <div class='texto-simbolo'>
+                <div class=simbolo>
+                    <img src='./img/logo/simbolo-index.png' alt=''>
+                </div>
+                <div class='texto texto-index'>
+                    <p>Vícios E</p>
+                    <p>Vivências</p>
+                </div>
+            </div>
+            <div class='rosto'>
+                <img src='./img/logo/rosto-index.png' alt=''>
+            </div>
+        </div>
+
+        <div class="form-area">
+            <div class='msg-aviso'> 
+                <?php
+                    if (isset($_SESSION['msg'])) {
+                        echo $_SESSION['msg'];
+                        unset($_SESSION['msg']);
+                    }
+                    if (isset($_SESSION['msg-login-erro'])) {
+                        echo "<h1 class='session-error'> {$_SESSION['msg-login-erro']} </h1>";
+                        unset($_SESSION['msg-login-erro']);
+                    };
+                    if (isset( $_SESSION['succes-cadastro'])) {
+                        echo "<h1 class='session-success'> {$_SESSION['succes-cadastro']} </h1>";
+                        unset($_SESSION['succes-cadastro']);
+                    };
+                ?>    
+            </div>
+            <form class="form " action="" method="POST" autocomplete="off">
+                <div class="form-item">
+                    <input type="text" name="email" required placeholder="Email" value=<?php
+                        if (isset($_SESSION['dadosLogin']['email'])) {
+                            echo $_SESSION['dadosLogin']['email'];
+                            unset($_SESSION['dadosLogin']['email']);
+                        } else {
+                            echo '';
+                        };
+                    ?>>
+                </div>
+                <div class="form-item">
+                    <input type="password" name="senha" required placeholder="Senha" id="id_senha_entrar" value=<?php
+                        if (isset($_SESSION['dadosLogin']['senha'])) {
+                            echo $_SESSION['dadosLogin']['senha'];
+                            unset($_SESSION['dadosLogin']['senha']);
+                        } else {
+                            echo '';
+                        };
+                    ?>>
+                </div>
+                <div class="form-item">
+                    <div class='btn-mostra-senha' id='btn-form-entrar' tabindex="0" onclick='mostraSenha("id_senha_entrar", id)'>Mostrar</div>
+                </div>
+                <div class="form-item form-submit">
+                    <button type="submit" name="submit">Entrar</button>
+                </div>
+                <div class='separa-form'>
+                    <section class="muda-form">
+                        <a href="formulario/formCadastrar.php"> Criar uma conta </a>
+                    </section>
+                </div>
+            </form>
+        </div>
         
-        <form class="form " action="" method="POST" autocomplete="off">
-            <div class="form-item">
-                <label for="id_nome_usuario_entrar">Email: </label>
-                <input type="text" name="email"  required value=<?php 
-                    if (isset($_SESSION['dadosLogin']['email'])) {
-                        echo $_SESSION['dadosLogin']['email'];
-                        unset($_SESSION['dadosLogin']['email']);
-                    } else {
-                        echo '';
-                    };
-                ?>>
-            </div>
-
-            <div class="form-item">
-                <label for="id_senha_entrar">Senha: </label>
-                <input type="password" name="senha" required id="id_senha_entrar" value=<?php 
-                    if (isset($_SESSION['dadosLogin']['senha'])) {
-                        echo $_SESSION['dadosLogin']['senha'];
-                        unset($_SESSION['dadosLogin']['senha']);
-                    } else {
-                        echo '';
-                    };
-                ?>>
-            </div>
-
-            <div class="form-item">
-                <div class='btn-mostra-senha' id='btn-form-entrar' tabindex="0" onclick='mostraSenha("id_senha_entrar", id)'>Mostrar</div>
-            </div>
-
-            <div class="form-item form-submit">
-                <button type="submit" name="submit">Enviar</button>
-            </div>
-        </form>       
-
-        <section class="muda-form">
-            <a href="formulario/formCadastrar.php"> Cadastrar-se </a>
-        </section>
     </div>
     
     <script>

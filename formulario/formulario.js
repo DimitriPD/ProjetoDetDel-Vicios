@@ -127,11 +127,20 @@ form_cadastra.addEventListener('submit', (event) => {
     const email = document.querySelector('#id_email').value
     const senha_hash = document.querySelector('#id_senha_cadastrar').value
     const data_nascimento = document.querySelector('#id_data_nascimento').value
+    const select_cidades = document.querySelector('.form-select')
+    const cidade = select_cidades.options[select_cidades.selectedIndex].value
     if (nome_usuario.trim() === '' || email.trim() === '' || senha_hash.trim() === '' || data_nascimento.trim() === '') {
         event.preventDefault()   
         alert("Preencha todos os campos!")
         return false
     } 
+
+    if (cidade === '') {
+        event.preventDefault()   
+        const aviso_cidade = new CriaElemento('p', 'aviso-erro', 'Selecione uma cidade')
+        document.querySelector('.aviso-cidade').appendChild(aviso_cidade.elemento)
+        return false
+    }
 
     if (!checkEmail(email) || senha_hash.length < 6 || !checkData(data_nascimento)) {
         event.preventDefault()   
