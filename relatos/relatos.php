@@ -221,6 +221,7 @@
                         CAST(r.data_hora_envio AS DATE) as data_envio,
                         ir.descricao_identificacao,
                         v.descricao_vicio,
+                        v.cod_vicio,
                         c.nome_cidade,
                         COUNT(rc.cod_relato) as upvotes
                     ',
@@ -268,7 +269,7 @@
 
                                     <div class='downtext'>
                                         <div class='sobre-vicios'>
-                                            <p>{$row['descricao_vicio']}</p>
+                                            <p id='{$row['cod_vicio']}'>{$row['descricao_vicio']}</p>
                                         </div>
                                     </div>
                                 </div>
