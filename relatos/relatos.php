@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="./relatos.css">
     <link rel="stylesheet" href="../filtros.css">
 
+    <script src="relatos.js" defer></script>
+
     <title>Projeto DetDelDel</title>
 </head>
 
@@ -23,6 +25,42 @@
         if (!isset($_SESSION['id'])) {
             $_SESSION['msg'] = '<h1 class="session-error"> Necessário realizar Login para acessar a página! </h1>';
             header('Location: ../index.php');
+        }
+
+        $dadosRelato = filter_input_array (INPUT_POST, FILTER_DEFAULT);
+
+        if (!empty($dadosRelato)) {
+            $_SESSION['conteudo_relato'] = $dadosRelato['conteudo-relato'];
+
+            if (isset($dadosRelato['esta-anonimo'])) {
+                $anonimo = 1;
+            } else {
+                $anonimo = 0;
+            }
+
+            $codRelatoAnterior = selectFromDb($conn, 'cod_relato', 'tb_relatos', null, 'cod_relato desc', 1);
+                if ($codRelatoAnterior) {
+                    while ($row = mysqli_fetch_assoc($codRelatoAnterior)) {
+                        settype($row['cod_relato'],'integer');
+                        $idRelato = $row['cod_relato'] + 1;
+                    }
+                }
+
+            date_default_timezone_set('America/Sao_Paulo');
+            $hora_envio = date("Y-m-d H:i:s");
+
+            $codStatus = 1;
+            
+            $atributosRelato = "$idRelato, {$_SESSION['cod_usuario']}, '{$dadosRelato['conteudo-relato']}', {$dadosRelato['identificacao-selecionada']}, $codStatus, $anonimo, '$hora_envio', null, null, null";
+            insertIntoDb(conn: $conn, tabela: 'tb_relatos', valores: $atributosRelato);
+
+            $atributosRelatoVicios = "$idRelato, {$dadosRelato['vicios-selecionados']}";
+            insertIntoDb(conn: $conn, tabela: 'tb_relato_vicios', valores: $atributosRelatoVicios);
+
+            $atributosRelatoCurte = "{$_SESSION['cod_usuario']}, $idRelato";
+            insertIntoDb(conn: $conn, tabela: 'tb_relato_curtidas', valores: $atributosRelatoCurte);
+
+            header('location: ./relatos.php');
         }
     ?>
 
@@ -59,33 +97,95 @@
                     <div class='foto-perfil'>
                         <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
                     </div>
-                    <div class='campo-texo'>
-                        <textarea name="" id="" cols="100" rows="2" style='resize: none;' placeholder="Digite aqui seu relato..."></textarea>
+
+                    <form onsubmit="enviarRelato(event)" class='campo-texo' method="post">
+                        <textarea name="conteudo-relato" id="" cols="100" rows="3" style='resize: none;' placeholder="Digite aqui seu relato..." value=
+                        <?php
+                            if (isset($_SESSION['conteudo-relato'])) {
+                                echo $_SESSION['conteudo-relato'];
+                                unset($_SESSION['conteudo-relato']);
+                            } else {
+                                echo '';
+                            }
+                        ?>
+                        ></textarea>
                         <div class="parte-inferior">
                             <div class="escolhas-relato">
                                 <ul>
-                                    <li> <a href="#"> 
-                                        <img src="../img/iconeCriaRelato/iconeVicios.png" alt=""> 
-                                        <p>Vicíos</p>
-                                    </a> </li>
+                                    <li id='icone-vicios'> 
+                                        <a href="#"> 
+                                            <img src="../img/iconeCriaRelato/iconeVicios.png" alt=""> 
+                                            <p>Vicíos</p>
+                                        </a> 
 
-                                    <li> <a href="#"> 
-                                        <img src="../img/iconeCriaRelato/iconeIdentificacao.png" alt="">
-                                        <p>Identificação</p>
-                                    </a> </li>
+                                        <div class="card-escolha-relato escolha-vicios esconde">
+                                            <ul>
+                                                <?php 
+                                                    $ViciosnNoIcone = selectFromDb(
+                                                        conn: $conn,
+                                                        atributos: "*",
+                                                        tabela: "tb_vicios"
+                                                    );
 
-                                    <li> <a href="#"> 
-                                        <img src="../img/iconeCriaRelato/iconeAnonimo.png" alt="">
-                                        <p>Anônimo</p>
-                                    </a> </li>
+                                                    if ($itensVicio) {
+                                                        while ($row = mysqli_fetch_assoc($ViciosnNoIcone)) {
+                                                            echo "
+                                                            <li>
+                                                                <input type='checkbox' name='vicios-selecionados' id='{$row['descricao_vicio']}' value='{$row['cod_vicio']}'> <label for='{$row['descricao_vicio']}'>{$row['descricao_vicio']}</label>
+                                                            </li>";
+                                                        };
+                                                    }
+                                                ?>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <li id='icone-identificacoes'>   
+                                        <a href="#"> 
+                                            <img src="../img/iconeCriaRelato/iconeIdentificacao.png" alt="">
+                                            <p>Identificação</p>
+                                        </a> 
+
+                                        <div class="card-escolha-relato escolha-identificacoes esconde">
+                                            <ul>
+                                                <?php 
+                                                    $ViciosnNoIcone = selectFromDb(
+                                                        conn: $conn,
+                                                        atributos: "*",
+                                                        tabela: "tb_identificacoes_relato"
+                                                    );
+
+                                                    if ($itensVicio) {
+                                                        while ($row = mysqli_fetch_assoc($ViciosnNoIcone)) {
+                                                            echo "
+                                                            <li>
+                                                                <input type='checkbox' name='identificacao-selecionada' id='{$row['descricao_identificacao']}' value='{$row['cod_identificacao_relato']}'> 
+                                                                <label for='{$row['descricao_identificacao']}'>{$row['descricao_identificacao']}</label>
+                                                            </li>";
+                                                        };
+                                                    }
+                                                ?>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <li id="icone-anonimo"> 
+                                        <a href="#"> 
+                                            <label for="anonimo-check">
+                                                <img src="../img/iconeCriaRelato/iconeAnonimo.png" alt="">
+                                                <p>Anônimo</p>
+                                            </label>
+                                            <input type="checkbox" name="esta-anonimo" id="anonimo-check">
+                                        </a> 
+                                    </li>
                                 </ul>
                             </div>
 
-                            <a href="#" class='btn-publicar'>
+                            <button type="submit" class='btn-publicar'>
                                 Publicar
-                            </a>
+                            </button>
                         </div>
-                    </div>
+                    </form>
 
             </div>
 
@@ -203,8 +303,14 @@
             ?>
         </div>
         
+        <div>
+            <?php 
+                
+            ?>
+        </div>
+
     </main>
-                <?php $teste = "aa"?>
+
     <script>
             const listaCheckBox = document.querySelectorAll('.checkbox')
             const teste = "<?php if (isset($_GET['idFiltro'])) {
@@ -215,6 +321,11 @@
                     check.classList.toggle('marcado')
                 }                
             } )
+
+            function teste2(inp) {
+                console.log(inp.value)
+            }
     </script>
+
 </body>
 </html>

@@ -34,7 +34,8 @@
                 u.email,
                 u.senha_hash as senha,
                 u.cod_tipo_usuario,
-                u.nome_usuario 
+                u.nome_usuario,
+                u.cod_usuario 
                 ',
                 'tb_usuarios u',
                 "(u.email = '{$dados['email']}' AND u.senha_hash = '{$dados['senha']}')"
@@ -52,6 +53,7 @@
                     $_SESSION['cod_usuario'] = $row['cod_usuario'];
                     $_SESSION['tipo_usuario'] = $row['cod_tipo_usuario'];
                     $_SESSION['nome_usuario'] = $row['nome_usuario'];
+
 
                     header('Location: ./relatos/relatos.php');
                 };
