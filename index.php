@@ -34,7 +34,8 @@
                 u.email,
                 u.senha_hash as senha,
                 u.cod_tipo_usuario,
-                u.nome_usuario 
+                u.nome_usuario,
+                u.cod_usuario
                 ',
                 'tb_usuarios u',
                 "(u.email = '{$dados['email']}' AND u.senha_hash = '{$dados['senha']}')"

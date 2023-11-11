@@ -6,7 +6,7 @@ function createHeader(string $tipo, string $nome='') {
         ["../perguntas/perguntas.php", "../img/iconeMenuNav/iconePerguntas","Perguntas"],
         ["../paginasConteudo/paginaConteudo.php", "../img/iconeMenuNav/iconeConteudos","Conteúdos"],
         ["../locaisAtendimento/locaisAtendimento.php", "../img/iconeMenuNav/iconeLocaisAtend","Locais De Atendimento"], 
-        ["../locaisAtendimento/locaisAtendimento.php", "../img/iconeMenuNav/iconeMeuPerfil","Meu Pefil"], 
+        ["../meuPerfil/meuPerfil.php", "../img/iconeMenuNav/iconeMeuPerfil","Meu Pefil"], 
         ["../locaisAtendimento/locaisAtendimento.php", "../img/iconeMenuNav/iconeAcessibilidade","Acessibilidade"], 
     ];
     
