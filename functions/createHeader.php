@@ -11,14 +11,14 @@ function createHeader(string $tipo, string $nome='') {
     ];
     
     if ($tipo <= 2) {
-        array_push($links, ["../validarPublicacoes/validarPublicacoes.php", "../img/iconeMenuNav/icone","Validar Publicações"]);
+        array_push($links, ["../validarPublicacoes/validarPublicacoes.php", "../img/iconeMenuNav/iconeValidarPublicacoes","Validar Publicações"]);
         if ($tipo == 1) {
-            array_push($links, ["../gerenciarUsuarios/usuarios.php",  "../img/iconeMenuNav/icone","Gerenciar Usuários"]);
+            array_push($links, ["../gerenciarUsuarios/usuarios.php",  "../img/iconeMenuNav/iconeGerenciarUsuarios","Gerenciar Usuários"]);
         };
     }
 
     if ($tipo == 3) {
-        array_push($links, ["../responderPerguntas/responderPerguntas.php",  "../img/iconeMenuNav/icone","Responder Perguntas"]);
+        array_push($links, ["../responderPerguntas/responderPerguntas.php",  "../img/iconeMenuNav/iconeResponderPerguntas","Responder Perguntas"]);
     }
 
     echo "
@@ -44,7 +44,7 @@ function createHeader(string $tipo, string $nome='') {
                     foreach ($links as $link) {                  
                         echo "<li class='list-item'>
                             <a href='{$link[0]}'>
-                                <div class='icone'> <img src='{$link[1]}.png' alt='F'> </div>
+                                <div class='icone'> <img src='{$link[1]}.png' alt=''> </div>
                                 <div class='texto'> {$link[2]} </div>
                             </a>
                         </li>";
