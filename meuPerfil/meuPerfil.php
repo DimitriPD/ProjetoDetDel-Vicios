@@ -183,10 +183,16 @@ include_once(__DIR__ . "/../functions/index.php");
                 </div>
                 {$rowRelato['descricao_status_relato']}
             </div>
-            <div class='relato-botoes'>
+            <div class='relato-botoes'>";
+
+            if ($rowRelato['descricao_status_relato'] == 'EM ANÁLISE') {
+              echo "
                 <a href='#' class='relato-botoes-editar'>
                     Editar
                 </a>
+                ";
+            }
+            echo "
                 <a href='#' class='relato-botoes-excluir'>
                     Excluir
                 </a>
