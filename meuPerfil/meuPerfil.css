@@ -1,0 +1,235 @@
+.perfil-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding-top: 1.25rem;
+  padding-inline: 3.125rem;
+}
+
+.card-dados-perfil {
+  display: flex;
+  padding: 20px;
+  align-items: flex-start;
+  gap: 20px;
+  align-self: stretch;
+  background: #8c9fa2;
+}
+
+.foto-perfil {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.foto-perfil img {
+  width: 200px;
+  height: 200px;
+  border: 2px solid black;
+  border-radius: 200px;
+  background-color: white;
+}
+
+.dados-pessoais {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;
+}
+
+.descricao {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;
+}
+.descricao p {
+  align-self: stretch;
+  font-size: 18px;
+}
+
+.editar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.btn-editar {
+  width: 145px;
+  height: 44px;
+  padding: 0.5rem 2rem;
+  font-size: 0.75rem;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  background-color: #3b615e;
+  border-radius: 5px;
+}
+
+.relatos-pergutas-area {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.opcao {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  background: #8c9fa2;
+}
+
+/* --------------------------------------------------- */
+
+.card-relato {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  width: 95%;
+  border: 1px solid black;
+  border-radius: 0.625rem;
+}
+
+.foto-perfil-relato {
+  top: -8%;
+  left: -4%;
+  position: absolute;
+  width: 8%;
+}
+
+.foto-perfil-relato img {
+  width: 100%;
+  border-radius: 50%;
+  border: 3px solid black;
+}
+
+.header-relato,
+.conteudo-relato,
+.footer-relato {
+  padding: 5px 0;
+  padding-inline: 40px 20px;
+}
+
+.header-relato {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding-top: 10px;
+}
+
+.header-relato .uptext {
+  display: flex;
+  justify-content: space-between;
+}
+
+.identificacao-relato,
+.sobre-vicios {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+}
+
+.identificacao-relato p,
+.sobre-vicios p {
+  padding: 3px 5px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+}
+
+.sobre-vicios p {
+  margin: 0.2rem 0;
+  margin-right: 10px;
+  background-color: red;
+}
+
+.conteudo-relato {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.data-cidade-relato {
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.footer-relato {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  padding: 0px 20px;
+  height: 43px;
+  align-self: stretch;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.status-relato {
+  display: flex;
+  padding: 5px 5px 0px 5px;
+  align-items: center;
+  gap: 15px;
+  border-radius: 5px;
+}
+
+.status-relato-icon {
+  width: 10.949px;
+  height: 17.336px;
+  fill: #000;
+}
+
+.status-relato-text {
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.relato-botoes {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.relato-botoes-excluir {
+  display: flex;
+  padding: 0px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  background: rgba(255, 0, 0, 0.65);
+  text-decoration: none;
+  text-align: center;
+  color: white;
+}
+
+.relato-botoes-editar {
+  display: flex;
+  padding: 0px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  background: rgba(3, 168, 30, 0.7);
+  text-decoration: none;
+  text-align: center;
+  color: white;
+}

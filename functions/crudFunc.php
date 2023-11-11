@@ -20,6 +20,8 @@
                 $sql .= "LIMIT $limita "; // concatena $sql a cláusula LIMIT
             }
 
+            error_log($sql);
+
             $result = mysqli_query($conn, $sql); // realiza query
             $resultCheck = mysqli_num_rows( $result ); // retorna numero de linhas geradas a partir da query
 
