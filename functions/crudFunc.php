@@ -20,6 +20,8 @@
                 $sql .= "LIMIT $limita "; // concatena $sql a cláusula LIMIT
             }
 
+            error_log($sql);
+
             $result = mysqli_query($conn, $sql); // realiza query
             $resultCheck = mysqli_num_rows( $result ); // retorna numero de linhas geradas a partir da query
 
@@ -54,4 +56,31 @@
             echo"Erro ao deletar do Banco: " . $e->getMessage(); 
         }
     }
+
+    function updateInDb(mysqli $conn, string $tabela, array $dados, string $condicao) {
+      try {
+          $setClause = '';
+  
+          // Constrói a cláusula SET
+          foreach ($dados as $coluna => $valor) {
+              $setClause .= "$coluna = '$valor', ";
+          }
+  
+          $setClause = rtrim($setClause, ', '); // Remove a última vírgula e espaço
+  
+          $sql = "UPDATE $tabela SET $setClause WHERE $condicao";
+  
+          error_log($sql);
+  
+          $result = mysqli_query($conn, $sql);
+  
+          if ($result) {
+              return true; // Operação de update bem-sucedida
+          } else {
+              return false; // Falha na operação de update
+          }
+      } catch (Exception $e) {
+          echo "Erro ao atualizar Banco: " . $e->getMessage();
+      }
+  }
 ?>
