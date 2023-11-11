@@ -31,29 +31,27 @@
             createHeader($_SESSION['tipo_usuario'], $_SESSION['nome_usuario']);
         ?>
 
-        <!-- <div class="header-relatos">
-            <h1>Relatos Feitos Pela Comunidade</h1>
             <?php 
-                // $itensVicio = selectFromDb(
-                //     conn: $conn,
-                //     atributos: "*",
-                //     tabela: "tb_vicios"
-                // );
-                // if ($itensVicio) {
-                //     echo "
-                //         <nav class='filtro-vicio'>                        
-                //             <ul class='list-filtro-vicio'>";
+                $itensVicio = selectFromDb(
+                    conn: $conn,
+                    atributos: "*",
+                    tabela: "tb_vicios"
+                );
+                if ($itensVicio) {
+                    echo "
+                        <nav class='filtro-vicio'>       
+                            <p class='titulo-filtro'>Vícios</p>                 
+                            <ul class='list-filtro-vicio'>";
 
-                //             echo "<li class='filtro-vicio-item'> <a href='./relatos.php'> Todos </a> </li>";
-                //             while ($row = mysqli_fetch_assoc($itensVicio)) {
-                //                 echo "<li class='filtro-vicio-item'> <a href='?idFiltro={$row['cod_vicio']}'> {$row['descricao_vicio']} </a> </li>";
-                //             };
-                //     echo '
-                //             </ul>
-                //         </nav>';
-                // }
+                            echo "<li class='filtro-vicio-item'> <a href='./relatos.php'> <div class='checkbox'></div> Todos </a> </li>";
+                            while ($row = mysqli_fetch_assoc($itensVicio)) {
+                                echo "<li class='filtro-vicio-item'> <a href='?idFiltro={$row['cod_vicio']}'> <div class='checkbox'></div> {$row['descricao_vicio']} </a> </li>";
+                            };
+                    echo '
+                            </ul>
+                        </nav>';
+                }
             ?>
-        </div> -->
 
         <div class="relatos-area">
             
@@ -206,5 +204,17 @@
         </div>
         
     </main>
+                <?php $teste = "aa"?>
+    <script>
+            const listaCheckBox = document.querySelectorAll('.checkbox')
+            const teste = "<?php if (isset($_GET['idFiltro'])) {
+                echo $_GET['idFiltro'];
+            } ?>"
+            listaCheckBox.forEach( (check, index) => {
+                if (index == teste) {
+                    check.classList.toggle('marcado')
+                }                
+            } )
+    </script>
 </body>
 </html>
