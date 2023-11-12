@@ -263,7 +263,7 @@
                                         echo "</p>
 
                                         <div class='identificacao-relato'>
-                                            <p>{$row['descricao_identificacao']}</p>
+                                            <p>{$row['descricao_identificacao']} A</p>
                                         </div>
                                     </div>
 
