@@ -218,6 +218,12 @@
                         r.conteudo_relato,
                         r.esta_anonimo,
                         CAST(r.data_hora_envio AS DATE) as data_envio,
+                        SUM(
+                            CASE
+                                WHEN  r.cod_relato = rc.cod_relato THEN 1
+                                ELSE 0
+                            END
+                        ) AS upvotes,
                         ir.descricao_identificacao,
                         v.descricao_vicio,
                         v.cod_vicio,
@@ -228,6 +234,7 @@
                         tb_usuarios u, 
                         tb_identificacoes_relato ir, 
                         tb_vicios v, 
+                        tb_relato_curtidas rc,
                         tb_relato_vicios rv,
                         tb_cidades c
                     ',
@@ -238,7 +245,8 @@
                         ir.descricao_identificacao,
                         r.esta_anonimo,
                         v.descricao_vicio
-                    '
+                    ',
+                    ordena: 'upvotes desc'
                     
                 );
 
@@ -286,14 +294,7 @@
                                 if ($_SESSION['tipo_usuario'] == 4) {
                                     echo "
                                     <div class='upvote-area'>
-                                        <p>";
-                                            $upvotes = selectFromDb(conn: $conn, atributos: "COUNT(*) as upvotes", tabela: 'tb_relato_curtidas', condicao:"cod_relato = {$row['cod_relato']}");
-
-                                            if ($upvotes) {
-                                                $curtidas = mysqli_fetch_assoc($upvotes);
-                                                echo $curtidas['upvotes'];
-                                            }
-                                        echo"</p>
+                                        <p> {$row['upvotes']} </p>
                                         <a href='?cod_relato_curtido={$row['cod_relato']}' class='upvote'>
                                             <div class='upvote-interno ";  
                                                 $marcaRelatosCurtidos = selectFromDb(conn: $conn, atributos: '*', tabela: 'tb_relato_curtidas');
