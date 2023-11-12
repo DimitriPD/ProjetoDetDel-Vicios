@@ -11,7 +11,7 @@ create table tb_cidades(
 	cod_cidade int primary key,
     nome_cidade varchar(50) not null,
     cod_estado int not null,
-    foreign key (cod_estado) references tb_estados(cod_estado)
+    foreign key (cod_estado) references tb_estados(cod_estado) ON DELETE CASCADE
 );
 
 create table tb_especialidades(
@@ -33,23 +33,23 @@ create table tb_usuarios(
     data_hora_cadastro datetime not null,
     cod_cidade int not null,
     cod_tipo_usuario int not null,
-    foreign key (cod_cidade) references tb_cidades(cod_cidade),
-    foreign key (cod_tipo_usuario) references tb_tipos_usuario(cod_tipo_usuario)
+    foreign key (cod_cidade) references tb_cidades(cod_cidade) ON DELETE CASCADE,
+    foreign key (cod_tipo_usuario) references tb_tipos_usuario(cod_tipo_usuario) ON DELETE CASCADE
 );
 
 create table tb_usuario_especialidades(
 	cod_usuario int,
 	cod_especialidade int,
 	primary key(cod_usuario, cod_especialidade),
-	foreign key (cod_especialidade) references tb_especialidades(cod_especialidade),
-	foreign key (cod_usuario) references tb_usuarios(cod_usuario)
+	foreign key (cod_especialidade) references tb_especialidades(cod_especialidade) ON DELETE CASCADE,
+	foreign key (cod_usuario) references tb_usuarios(cod_usuario) ON DELETE CASCADE
 );
 
 create table tb_avaliacoes_site(
 	cod_usuario int primary key,
     nota int not null,
     justificativa varchar(500),
-    foreign key (cod_usuario) references tb_usuarios(cod_usuario)
+    foreign key (cod_usuario) references tb_usuarios(cod_usuario) ON DELETE CASCADE
 );
 
 create table tb_vicios(
@@ -65,7 +65,7 @@ create table tb_locais_atendimentos(
     numero_endereco varchar(25) not null,
     bairro varchar(50) not null,
     cod_cidade int not null,
-    foreign key (cod_cidade) references tb_cidades(cod_cidade)
+    foreign key (cod_cidade) references tb_cidades(cod_cidade) ON DELETE CASCADE
 );
 
 create table tb_local_telefones(
@@ -73,15 +73,15 @@ create table tb_local_telefones(
 	telefone char(15),
 	ddd char(3),
 	primary key (ddd, telefone, cod_local),
-	foreign key (cod_local) references tb_locais_atendimentos(cod_local)
+	foreign key (cod_local) references tb_locais_atendimentos(cod_local) ON DELETE CASCADE
 );
 
 create table tb_local_vicios(
 	cod_local int,
 	cod_vicio int,
 	primary key (cod_vicio, cod_local),
-	foreign key (cod_local) references tb_locais_atendimentos(cod_local),
-	foreign key (cod_vicio) references tb_vicios(cod_vicio)
+	foreign key (cod_local) references tb_locais_atendimentos(cod_local) ON DELETE CASCADE,
+	foreign key (cod_vicio) references tb_vicios(cod_vicio) ON DELETE CASCADE
 );
 
 create table tb_paginas(
@@ -91,15 +91,15 @@ create table tb_paginas(
     data_hora_criacao datetime not null,
     esta_ativa int not null,
     cod_usuario_criador int not null,
-    foreign key (cod_usuario_criador) references tb_usuarios(cod_usuario)
+    foreign key (cod_usuario_criador) references tb_usuarios(cod_usuario) ON DELETE CASCADE
 );
 
 create table tb_pagina_vicios(
 	cod_vicio int,
 	cod_pagina int,
 	primary key (cod_vicio, cod_pagina),
-	foreign key (cod_pagina) references tb_paginas(cod_pagina),
-	foreign key (cod_vicio) references tb_vicios(cod_vicio)
+	foreign key (cod_pagina) references tb_paginas(cod_pagina) ON DELETE CASCADE,
+	foreign key (cod_vicio) references tb_vicios(cod_vicio) ON DELETE CASCADE
 );
 
 create table tb_pagina_manipulacoes(
@@ -108,8 +108,8 @@ create table tb_pagina_manipulacoes(
 	data_hora_manipulacao datetime,
 	descricao_manipulacao varchar(500) not null,
 	primary key (cod_usuario, cod_pagina, data_hora_manipulacao),
-	foreign key (cod_pagina) references tb_paginas(cod_pagina),
-	foreign key (cod_usuario) references tb_usuarios(cod_usuario)
+	foreign key (cod_pagina) references tb_paginas(cod_pagina) ON DELETE CASCADE,
+	foreign key (cod_usuario) references tb_usuarios(cod_usuario) ON DELETE CASCADE
 );
 
 create table tb_status_pergunta(
@@ -129,26 +129,26 @@ create table tb_perguntas(
 	cod_usuario_analise int,
 	data_hora_analise datetime,
 	descricao_analise varchar(1000),	
-	foreign key (cod_status_pergunta) references tb_status_pergunta(cod_status_pergunta),
-	foreign key (cod_usuario_pergunta) references tb_usuarios(cod_usuario),
-	foreign key (cod_usuario_analise) references tb_usuarios(cod_usuario),
-	foreign key (cod_usuario_resposta) references tb_usuarios(cod_usuario)
+	foreign key (cod_status_pergunta) references tb_status_pergunta(cod_status_pergunta) ON DELETE CASCADE,
+	foreign key (cod_usuario_pergunta) references tb_usuarios(cod_usuario) ON DELETE CASCADE,
+	foreign key (cod_usuario_analise) references tb_usuarios(cod_usuario) ON DELETE CASCADE,
+	foreign key (cod_usuario_resposta) references tb_usuarios(cod_usuario) ON DELETE CASCADE
 );
 
 create table tb_pergunta_vicios(
 	cod_pergunta int,
 	cod_vicio int,
 	primary key (cod_pergunta, cod_vicio),
-	foreign key (cod_pergunta) references tb_perguntas(cod_pergunta),
-	foreign key (cod_vicio) references tb_vicios(cod_vicio)
+	foreign key (cod_pergunta) references tb_perguntas(cod_pergunta) ON DELETE CASCADE,
+	foreign key (cod_vicio) references tb_vicios(cod_vicio) ON DELETE CASCADE
 );
 
 create table tb_pergunta_curtidas(
 	cod_pergunta int,
 	cod_usuario int,
 	primary key (cod_pergunta, cod_usuario),
-	foreign key (cod_pergunta) references tb_perguntas(cod_pergunta),
-	foreign key (cod_usuario) references tb_usuarios(cod_usuario)
+	foreign key (cod_pergunta) references tb_perguntas(cod_pergunta) ON DELETE CASCADE,
+	foreign key (cod_usuario) references tb_usuarios(cod_usuario) ON DELETE CASCADE
 );
 
 create table tb_identificacoes_relato(
@@ -172,26 +172,26 @@ create table tb_relatos(
 	cod_usuario_analise int,
 	data_hora_analise datetime,
 	descricao_analise varchar(1000),
-	foreign key (cod_usuario_relato) references tb_usuarios(cod_usuario),
-	foreign key (cod_usuario_analise) references tb_usuarios(cod_usuario),
-	foreign key (cod_identificacao_relato) references tb_identificacoes_relato(cod_identificacao_relato),
-	foreign key (cod_status_relato) references tb_relato_status(cod_status_relato)
+	foreign key (cod_usuario_relato) references tb_usuarios(cod_usuario) ON DELETE CASCADE,
+	foreign key (cod_usuario_analise) references tb_usuarios(cod_usuario) ON DELETE CASCADE,
+	foreign key (cod_identificacao_relato) references tb_identificacoes_relato(cod_identificacao_relato) ON DELETE CASCADE,
+	foreign key (cod_status_relato) references tb_relato_status(cod_status_relato) ON DELETE CASCADE
 );
 
 create table tb_relato_curtidas(
 	cod_usuario int,
 	cod_relato int,
 	primary key (cod_usuario, cod_relato),
-	foreign key (cod_usuario) references tb_usuarios(cod_usuario),
-    foreign key (cod_relato) references tb_relatos(cod_relato)
+	foreign key (cod_usuario) references tb_usuarios(cod_usuario) ON DELETE CASCADE,
+    foreign key (cod_relato) references tb_relatos(cod_relato) ON DELETE CASCADE
 );
 
 create table tb_relato_vicios(
     cod_relato int, 
     cod_vicio int,
     primary key (cod_relato , cod_vicio),
-    foreign key (cod_relato) references tb_relatos(cod_relato),
-    foreign key (cod_vicio) references tb_vicios(cod_vicio)
+    foreign key (cod_relato) references tb_relatos(cod_relato) ON DELETE CASCADE,
+    foreign key (cod_vicio) references tb_vicios(cod_vicio) ON DELETE CASCADE
 );
 
 /*-------------------------------INSERÇÃO-------------------------------------------*/
