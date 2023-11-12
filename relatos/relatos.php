@@ -58,9 +58,6 @@
             $atributosRelatoVicios = "$idRelato, {$dadosRelato['vicios-selecionados']}";
             insertIntoDb(conn: $conn, tabela: 'tb_relato_vicios', valores: $atributosRelatoVicios);
 
-            $atributosRelatoCurte = "{$_SESSION['cod_usuario']}, $idRelato";
-            insertIntoDb(conn: $conn, tabela: 'tb_relato_curtidas', valores: $atributosRelatoCurte);
-
             header('location: ./relatos.php');
         }
     ?>
@@ -198,7 +195,6 @@
                     (u.cod_usuario = r.cod_usuario_relato AND 
                     r.cod_status_relato = 3 AND 
                     r.cod_identificacao_relato = ir.cod_identificacao_relato AND
-                    rc.cod_relato = r.cod_relato AND 
                     (v.cod_vicio = rv.cod_vicio AND v.cod_vicio = {$_GET['idFiltro']}) AND
                     rv.cod_relato = r.cod_relato) AND
                     c.cod_cidade = u.cod_cidade
@@ -208,7 +204,6 @@
                     (u.cod_usuario = r.cod_usuario_relato AND 
                     r.cod_status_relato = 3 AND 
                     r.cod_identificacao_relato = ir.cod_identificacao_relato AND
-                    rc.cod_relato = r.cod_relato AND 
                     (v.cod_vicio = rv.cod_vicio) AND
                     rv.cod_relato = r.cod_relato) AND
                     c.cod_cidade = u.cod_cidade
@@ -226,14 +221,12 @@
                         ir.descricao_identificacao,
                         v.descricao_vicio,
                         v.cod_vicio,
-                        c.nome_cidade,
-                        COUNT(rc.cod_relato) as upvotes
+                        c.nome_cidade
                     ',
                     tabela: '
                         tb_relatos r, 
                         tb_usuarios u, 
                         tb_identificacoes_relato ir, 
-                        tb_relato_curtidas rc, 
                         tb_vicios v, 
                         tb_relato_vicios rv,
                         tb_cidades c
@@ -245,8 +238,8 @@
                         ir.descricao_identificacao,
                         r.esta_anonimo,
                         v.descricao_vicio
-                    ',
-                    ordena: 'upvotes desc'
+                    '
+                    
                 );
 
                 if ($resultado) {
@@ -289,12 +282,21 @@
                                     </div>
                                 </div>
 
-                                <div class='footer-relato'>
+                                <div class='footer-relato'>";
+                                if ($_SESSION['tipo_usuario'] == 4) {
+                                    echo "
                                     <div class='upvote-area'>
-                                        <p> {$row['upvotes']} </p>
+                                        <p>";
+                                            $upvotes = selectFromDb(conn: $conn, atributos: "COUNT(*) as upvotes", tabela: 'tb_relato_curtidas', condicao:"cod_relato = {$row['cod_relato']}");
+
+                                            if ($upvotes) {
+                                                $curtidas = mysqli_fetch_assoc($upvotes);
+                                                echo $curtidas['upvotes'];
+                                            }
+                                        echo"</p>
                                         <a href='?cod_relato_curtido={$row['cod_relato']}' class='upvote'>
                                             <div class='upvote-interno ";  
-                                                $marcaRelatosCurtidos = selectFromDb(conn: $conn, atributos: "*", tabela: "tb_relato_curtidas");
+                                                $marcaRelatosCurtidos = selectFromDb(conn: $conn, atributos: '*', tabela: 'tb_relato_curtidas');
                                             
                                                 if ($marcaRelatosCurtidos) {
                                                     while ($rowUpVoteMarcado = mysqli_fetch_assoc($marcaRelatosCurtidos)) {
@@ -308,7 +310,9 @@
                                                 };
                                             echo "'></div>
                                         </a>
-                                    </div>
+                                    </div>";
+                                }
+                                echo "    
                                 </div>
                             </div>";
                     }
