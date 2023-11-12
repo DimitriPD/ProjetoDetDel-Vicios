@@ -219,6 +219,7 @@
                     conn: $conn,
                     atributos: '
                         u.nome_usuario,
+                        r.cod_relato,
                         r.conteudo_relato,
                         r.esta_anonimo,
                         CAST(r.data_hora_envio AS DATE) as data_envio,
@@ -291,7 +292,7 @@
                                 <div class='footer-relato'>
                                     <div class='upvote-area'>
                                         <p> {$row['upvotes']} </p>
-                                        <a href='#' class='upvote'>
+                                        <a href='?cod_relato={$row['cod_relato']}' class='upvote'>
                                             <div class='upvote-interno'></div>
                                         </a>
                                     </div>
@@ -307,11 +308,7 @@
             ?>
         </div>
         
-        <div>
-            <?php 
-                
-            ?>
-        </div>
+        
 
     </main>
 
