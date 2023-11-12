@@ -93,41 +93,42 @@
             ?>
 
         <div class="relatos-area">
-            
-            <div class='card-cria-relato'>
-                    <div class='foto-perfil'>
-                        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
-                    </div>
-
-                    <form onsubmit="enviarRelato(event)" class='campo-texo' method="post">
-                        <textarea name="conteudo-relato" id="" cols="100" rows="3" style='resize: none;' placeholder="Digite aqui seu relato..." value=
-                        <?php
-                            if (isset($_SESSION['conteudo-relato'])) {
-                                echo $_SESSION['conteudo-relato'];
-                                unset($_SESSION['conteudo-relato']);
-                            } else {
-                                echo '';
-                            }
-                        ?>
-                        ></textarea>
-                        <div class="parte-inferior">
-                            <div class="escolhas-relato">
-                                <ul>
-                                    <li id='icone-vicios'> 
-                                        <a href="#"> 
-                                            <img src="../img/iconeCriaRelato/iconeVicios.png" alt=""> 
-                                            <p>Vicíos</p>
-                                        </a> 
-
-                                        <div class="card-escolha-relato escolha-vicios esconde">
-                                            <ul>
-                                                <?php 
+        <?php 
+            if ($_SESSION['tipo_usuario'] == 4) {
+                echo "
+                <div class='card-cria-relato'>
+                        <div class='foto-perfil'>
+                            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
+                        </div>
+    
+                        <form onsubmit='enviarRelato(event)' class='campo-texo' method='post'>
+                            <textarea name='conteudo-relato' id='' cols='100' rows='3' style='resize: none;' placeholder='Digite aqui seu relato...' value=";
+                                if (isset($_SESSION['conteudo-relato'])) {
+                                    echo $_SESSION['conteudo-relato'];
+                                    unset($_SESSION['conteudo-relato']);
+                                } else {
+                                    echo '';
+                                }
+                            echo "
+                            ></textarea>
+                            <div class='parte-inferior'>
+                                <div class='escolhas-relato'>
+                                    <ul>
+                                        <li id='icone-vicios'> 
+                                            <a href='#'> 
+                                                <img src='../img/iconeCriaRelato/iconeVicios.png' alt=''> 
+                                                <p>Vicíos</p>
+                                            </a> 
+    
+                                            <div class='card-escolha-relato escolha-vicios esconde'>
+                                                <ul>";
+                                                    
                                                     $ViciosnNoIcone = selectFromDb(
                                                         conn: $conn,
                                                         atributos: "*",
                                                         tabela: "tb_vicios"
                                                     );
-
+    
                                                     if ($itensVicio) {
                                                         while ($row = mysqli_fetch_assoc($ViciosnNoIcone)) {
                                                             echo "
@@ -136,26 +137,25 @@
                                                             </li>";
                                                         };
                                                     }
-                                                ?>
-                                            </ul>
-                                        </div>
-                                    </li>
-
-                                    <li id='icone-identificacoes'>   
-                                        <a href="#"> 
-                                            <img src="../img/iconeCriaRelato/iconeIdentificacao.png" alt="">
-                                            <p>Identificação</p>
-                                        </a> 
-
-                                        <div class="card-escolha-relato escolha-identificacoes esconde">
-                                            <ul>
-                                                <?php 
+                                                echo "
+                                                </ul>
+                                            </div>
+                                        </li>
+    
+                                        <li id='icone-identificacoes'>   
+                                            <a href='#'> 
+                                                <img src='../img/iconeCriaRelato/iconeIdentificacao.png' alt=''>
+                                                <p>Identificação</p>
+                                            </a> 
+    
+                                            <div class='card-escolha-relato escolha-identificacoes esconde'>
+                                                <ul>";
                                                     $ViciosnNoIcone = selectFromDb(
                                                         conn: $conn,
                                                         atributos: "*",
                                                         tabela: "tb_identificacoes_relato"
                                                     );
-
+    
                                                     if ($itensVicio) {
                                                         while ($row = mysqli_fetch_assoc($ViciosnNoIcone)) {
                                                             echo "
@@ -165,30 +165,32 @@
                                                             </li>";
                                                         };
                                                     }
-                                                ?>
-                                            </ul>
-                                        </div>
-                                    </li>
-
-                                    <li id="icone-anonimo"> 
-                                        <a href="#"> 
-                                            <label for="anonimo-check">
-                                                <img src="../img/iconeCriaRelato/iconeAnonimo.png" alt="">
-                                                <p>Anônimo</p>
-                                            </label>
-                                            <input type="checkbox" name="esta-anonimo" id="anonimo-check">
-                                        </a> 
-                                    </li>
-                                </ul>
+                                                echo "
+                                                </ul>
+                                            </div>
+                                        </li>
+    
+                                        <li id='icone-anonimo'> 
+                                            <a href='#'> 
+                                                <label for='anonimo-check'>
+                                                    <img src='../img/iconeCriaRelato/iconeAnonimo.png' alt=''>
+                                                    <p>Anônimo</p>
+                                                </label>
+                                                <input type='checkbox' name='esta-anonimo' id='anonimo-check'>
+                                            </a> 
+                                        </li>
+                                    </ul>
+                                </div>
+    
+                                <button type='submit' class='btn-publicar'>
+                                    Publicar
+                                </button>
                             </div>
-
-                            <button type="submit" class='btn-publicar'>
-                                Publicar
-                            </button>
-                        </div>
-                    </form>
-
-            </div>
+                        </form>
+                </div>";
+            }
+        
+        ?>
 
             <?php 
                 if (isset($_GET['idFiltro'])) {

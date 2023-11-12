@@ -224,7 +224,7 @@ include_once(__DIR__ . "/../functions/index.php");
               $cont = mysqli_fetch_assoc($conteudo);
               echo "
               <div class='edicao-relato-area ";  if(!isset($_GET['esconde'])) {echo 'esconde';} echo"'>
-                  <form action='./meuPerfil.php' method='post' id='formEditaDeleta'>";
+                  <form action='./meuPerfil.php' method='post' id='formEditaDeleta' autocomplete='off'> ";
                     if (isset($_GET["acao"]) && $_GET["acao"] == 'editar') {
                       echo "
                         <p>Conteudo anterior: </p>
