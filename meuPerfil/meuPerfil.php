@@ -224,11 +224,11 @@ include_once(__DIR__ . "/../functions/index.php");
               $cont = mysqli_fetch_assoc($conteudo);
               echo "
               <div class='edicao-relato-area ";  if(!isset($_GET['esconde'])) {echo 'esconde';} echo"'>
-                  <form action='./meuPerfil.php' method='post'>";
+                  <form action='./meuPerfil.php' method='post' id='formEditaDeleta'>";
                     if (isset($_GET["acao"]) && $_GET["acao"] == 'editar') {
                       echo "
                         <p>Conteudo anterior: </p>
-                        <input type='text' name='conteudo-relato' id='' value='{$cont['conteudo_relato']}'>
+                        <input type='text' name='conteudo-relato' id='conteudo-relato' value='{$cont['conteudo_relato']}'>
                         <input type='hidden' name='cod-relato' id='' value='{$_GET['codRelato']}'>
                         
                         <div class='btn-area'>
@@ -274,6 +274,18 @@ include_once(__DIR__ . "/../functions/index.php");
           }
         ?>
   </main>
+
+  <script>
+    document.querySelector('#formEditaDeleta').addEventListener("submit", (event) => {
+      const conteudoRelato = document.querySelector("#conteudo-relato").value
+
+      if (conteudoRelato.trim() === '' || conteudoRelato.length < 20 || conteudoRelato.length > 3000) {
+        event.preventDefault()
+        alert("Relato deve ter 20 caracteres no minimo!")
+        return
+      }
+    })
+  </script>
 </body>
 
 </html>
