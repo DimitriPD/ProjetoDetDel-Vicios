@@ -368,7 +368,7 @@
   border: 3px solid rgba(0, 0, 0, 0.8);
 }
 
-.edicao-relato-area form input {
+.edicao-relato-area form input,  .edicao-relato-area form .conteudo-relato{
   width: 100%;
   padding: 10px 5px;
   border: 1px solid black;
@@ -397,6 +397,9 @@
 .edicao-relato-area form .btn-area button {
   background-color: green;
 }
+
+
+
 .esconde {
   display: none;
 }

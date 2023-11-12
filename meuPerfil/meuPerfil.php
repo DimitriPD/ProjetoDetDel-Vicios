@@ -240,7 +240,7 @@ include_once(__DIR__ . "/../functions/index.php");
                     if (isset($_GET["acao"]) && $_GET["acao"] == 'excluir') {
                       echo "
                         <p>Conteudo a ser excluido: </p>
-                        <div>
+                        <div class='conteudo-relato'>
                           {$cont['conteudo_relato']}
                         </div>
 
