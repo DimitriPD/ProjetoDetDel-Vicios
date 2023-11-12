@@ -189,9 +189,9 @@ include_once(__DIR__ . "/../functions/index.php");
             </div>
             <div class='relato-botoes'>";
 
+            $acaoEditar = 'editar';
+            $acaoExcluir = 'excluir';
             if ($rowRelato['descricao_status_relato'] == 'EM ANÁLISE') {
-              $acaoEditar = 'editar';
-              $acaoExcluir = 'excluir';
               echo "
                 <a id='editar-relato' href='?codRelato={$rowRelato['cod_relato']}&acao=$acaoEditar&esconde=''' class='relato-botoes-editar'>
                   Editar
