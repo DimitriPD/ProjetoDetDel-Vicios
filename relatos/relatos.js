@@ -56,4 +56,6 @@ function enviarRelato(event) {
         alert("Selecione apenas uma Identificacao do Relato")
         return
     }    
+
+    alert("Relato enviado para analise!")
 }
