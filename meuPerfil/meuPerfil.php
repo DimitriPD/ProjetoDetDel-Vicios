@@ -13,6 +13,9 @@ include_once(__DIR__ . "/../functions/index.php");
 
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="./meuPerfil.css">
+
+  <script src="../utils/tags.js" defer></script>
+
   <title>Projeto DetDelDel</title>
 </head>
 
@@ -141,7 +144,8 @@ include_once(__DIR__ . "/../functions/index.php");
             $vicios = selectFromDb(
               conn: $conn,
               atributos: '
-                    tv.descricao_vicio 
+                    tv.descricao_vicio,
+                    tv.cod_vicio
                 ',
               tabela: '
                     tb_relato_vicios trv,
@@ -159,7 +163,7 @@ include_once(__DIR__ . "/../functions/index.php");
             echo "<div class='downtext'>
                <div class='sobre-vicios'>";
             while ($rowVicios = mysqli_fetch_assoc($vicios)) {
-              echo "<p>{$rowVicios['descricao_vicio']}</p>";
+              echo "<p id='{$rowVicios['cod_vicio']}'>{$rowVicios['descricao_vicio']}</p>";
             }
             echo "
             </div>
@@ -186,19 +190,22 @@ include_once(__DIR__ . "/../functions/index.php");
             <div class='relato-botoes'>";
 
             if ($rowRelato['descricao_status_relato'] == 'EM ANÁLISE') {
+              $acaoEditar = 'editar';
+              $acaoExcluir = 'excluir';
               echo "
-                <a href='#' class='relato-botoes-editar'>
-                    Editar
+                <a id='editar-relato' href='?codRelato={$rowRelato['cod_relato']}&acao=$acaoEditar&esconde=''' class='relato-botoes-editar'>
+                  Editar
                 </a>
                 ";
             }
             echo "
-                <a href='#' class='relato-botoes-excluir'>
+                <a href='?codRelato={$rowRelato['cod_relato']}&acao=$acaoExcluir&esconde=''' class='relato-botoes-excluir'>
                     Excluir
                 </a>
             </div>
         </div>
-        </div>";
+        </div>
+        ";
           }
         } else {
           echo '<div> 
@@ -209,6 +216,63 @@ include_once(__DIR__ . "/../functions/index.php");
       </div>
     </div>
 
+    <?php 
+          if (isset($_GET['codRelato'])) {
+            $conteudo = selectFromDb(conn: $conn, atributos: 'conteudo_relato', tabela: "tb_relatos", condicao: "cod_relato = {$_GET['codRelato']}");
+
+            if ($conteudo) {
+              $cont = mysqli_fetch_assoc($conteudo);
+              echo "
+              <div class='edicao-relato-area ";  if(!isset($_GET['esconde'])) {echo 'esconde';} echo"'>
+                  <form action='./meuPerfil.php' method='post'>";
+                    if (isset($_GET["acao"]) && $_GET["acao"] == 'editar') {
+                      echo "
+                        <p>Conteudo anterior: </p>
+                        <input type='text' name='conteudo-relato' id='' value='{$cont['conteudo_relato']}'>
+                        <input type='hidden' name='cod-relato' id='' value='{$_GET['codRelato']}'>
+                        
+                        <div class='btn-area'>
+                          <a href='./meuPerfil.php' class='btn-cancelar'>Cancelar</a>
+                          <button type='submit'>Salvar Alterações</button>
+                        </div>";
+                    }
+
+                    if (isset($_GET["acao"]) && $_GET["acao"] == 'excluir') {
+                      echo "
+                        <p>Conteudo a ser excluido: </p>
+                        <div>
+                          {$cont['conteudo_relato']}
+                        </div>
+
+                        <input type='hidden' name='cod-relato-excluir' id='' value='{$_GET['codRelato']}'>
+
+                        <div class='btn-area'> 
+                          <p>Deseja excluir essa publicação: </p>
+                          <a href='./meuPerfil.php' class='btn-cancelar'>Não</a>
+                          <button type='submit'>Sim</button>
+                        </div>
+                      ";
+                    }
+              echo "
+                  </form>
+              </div>";
+            }
+          };
+
+          if (isset($_POST['conteudo-relato'])) {
+            $dados = array(
+              'conteudo_relato' => $_POST['conteudo-relato']
+            );
+            updateInDb(conn: $conn, tabela: 'tb_relatos', dados: $dados, condicao: "cod_relato = {$_POST['cod-relato']}");
+            echo "<script> window.location = './meuPerfil.php' </script>";
+          }
+
+          if (isset($_POST["cod-relato-excluir"])) {
+            deleteDb(conn: $conn, tabela: "tb_relato_vicios", campo: "cod_relato", id: $_POST["cod-relato-excluir"]);
+            deleteDb(conn: $conn, tabela: "tb_relatos", campo: "cod_relato", id: $_POST["cod-relato-excluir"]);
+            echo "<script> window.location = './meuPerfil.php' </script>";
+          }
+        ?>
   </main>
 </body>
 

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../filtros.css">
 
     <script src="relatos.js" defer></script>
+    <script src="../utils/tags.js" defer></script>
 
     <title>Projeto DetDelDel</title>
 </head>
@@ -263,7 +264,7 @@
                                         echo "</p>
 
                                         <div class='identificacao-relato'>
-                                            <p>{$row['descricao_identificacao']} </p>
+                                            <p>{$row['descricao_identificacao']}</p>
                                         </div>
                                     </div>
 

@@ -342,3 +342,61 @@
   gap: 20px;
   align-self: stretch;
 }
+
+/* -------------------------------------- */
+
+.edicao-relato-area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100vh;
+}
+
+.edicao-relato-area form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 40%;
+  padding: 50px 20px;
+  background-color: white;
+  border-radius: 10px;
+  border: 3px solid rgba(0, 0, 0, 0.8);
+}
+
+.edicao-relato-area form input {
+  width: 100%;
+  padding: 10px 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.edicao-relato-area form .btn-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
+}
+
+.edicao-relato-area form .btn-cancelar, .edicao-relato-area form .btn-area button  {
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 5px 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.edicao-relato-area form .btn-area button {
+  background-color: green;
+}
+.esconde {
+  display: none;
+}

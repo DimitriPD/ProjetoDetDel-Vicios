@@ -20,7 +20,7 @@
                 $sql .= "LIMIT $limita "; // concatena $sql a cláusula LIMIT
             }
 
-            error_log($sql);
+           
 
             $result = mysqli_query($conn, $sql); // realiza query
             $resultCheck = mysqli_num_rows( $result ); // retorna numero de linhas geradas a partir da query
@@ -31,6 +31,7 @@
                 return false;
             }
         } catch (Exception $e) { // se tiver algum erro na hora de fazer a query, exibe na tela qual foi
+            error_log($e);
             echo "Erro ao consultar Banco: " . $e->getMessage();
         }
     } 
@@ -41,6 +42,7 @@
             $sql = "INSERT INTO $tabela VALUES ($valores)";
             mysqli_query($conn, $sql); // realiza a query            
         } catch (Exception $e) { // se tiver algum erro na hora de fazer a query, exibe na tela qual foi
+            error_log($e);
             echo"Erro ao inserir no Banco: " . $e->getMessage(); 
         }
     } 
@@ -53,6 +55,7 @@
             $sql = "DELETE FROM $tabela WHERE $campo = $id ";
             mysqli_query($conn, $sql); // realiza a query  
         } catch (Exception $e) { // se tiver algum erro na hora de fazer a query, exibe na tela qual foi
+            error_log($e);
             echo"Erro ao deletar do Banco: " . $e->getMessage(); 
         }
     }
@@ -70,7 +73,6 @@
   
           $sql = "UPDATE $tabela SET $setClause WHERE $condicao";
   
-          error_log($sql);
   
           $result = mysqli_query($conn, $sql);
   
@@ -80,6 +82,7 @@
               return false; // Falha na operação de update
           }
       } catch (Exception $e) {
+        error_log($e);
           echo "Erro ao atualizar Banco: " . $e->getMessage();
       }
   }
