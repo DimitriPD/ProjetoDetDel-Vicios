@@ -49,7 +49,7 @@
 
     //Funcao delete sql
 
-    function deleteDb(mysqli $conn, string $tabela, string $campo,int $id) {
+    function deleteDb(mysqli $conn, string $tabela, string $campo, $id) {
         try {
             mysqli_query($conn, 'SET FOREIGN_KEY_CHECKS=0'); // realiza a query  
             $sql = "DELETE FROM $tabela WHERE $campo = $id ";

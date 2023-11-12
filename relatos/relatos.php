@@ -292,8 +292,21 @@
                                 <div class='footer-relato'>
                                     <div class='upvote-area'>
                                         <p> {$row['upvotes']} </p>
-                                        <a href='?cod_relato={$row['cod_relato']}' class='upvote'>
-                                            <div class='upvote-interno'></div>
+                                        <a href='?cod_relato_curtido={$row['cod_relato']}' class='upvote'>
+                                            <div class='upvote-interno ";  
+                                                $marcaRelatosCurtidos = selectFromDb(conn: $conn, atributos: "*", tabela: "tb_relato_curtidas");
+                                            
+                                                if ($marcaRelatosCurtidos) {
+                                                    while ($rowUpVoteMarcado = mysqli_fetch_assoc($marcaRelatosCurtidos)) {
+                                                        if ($_SESSION['cod_usuario'] == $rowUpVoteMarcado['cod_usuario'] && $row['cod_relato'] == $rowUpVoteMarcado['cod_relato']) {
+                                                            echo "upvote_marcado";
+                                                        }
+                                                        else {
+                                                            echo '';
+                                                        }
+                                                    }
+                                                };
+                                            echo "'></div>
                                         </a>
                                     </div>
                                 </div>
@@ -308,7 +321,27 @@
             ?>
         </div>
         
-        
+        <!-- Curtir Relato -->
+        <?php 
+            if (isset($_GET['cod_relato_curtido'])) {
+                $relatosCurtidos = selectFromDb(conn: $conn, atributos: "*", tabela: "tb_relato_curtidas");
+
+                if ($relatosCurtidos) {
+                    while ($rowCurtidos = mysqli_fetch_assoc($relatosCurtidos)) {
+                        
+                        if ($_SESSION['cod_usuario'] == $rowCurtidos['cod_usuario'] && $_GET['cod_relato_curtido'] == $rowCurtidos['cod_relato']) {
+                            deleteDb(conn: $conn, tabela: 'tb_relato_curtidas', campo: 'cod_relato', id: "{$_GET['cod_relato_curtido']} AND cod_usuario = {$_SESSION['cod_usuario']}" );
+                            echo "<script> window.location = './relatos.php' </script>";
+                            return;
+                        } 
+                    }
+
+                    insertIntoDb(conn: $conn, tabela: 'tb_relato_curtidas', valores: "{$_SESSION['cod_usuario']}, {$_GET['cod_relato_curtido']}");
+                    echo "<script> window.location = './relatos.php' </script>";
+                    return;
+                }
+            }
+        ?>
 
     </main>
 
@@ -322,10 +355,6 @@
                     check.classList.toggle('marcado')
                 }                
             } )
-
-            function teste2(inp) {
-                console.log(inp.value)
-            }
     </script>
 
 </body>
