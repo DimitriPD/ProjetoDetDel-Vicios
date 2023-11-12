@@ -6,7 +6,6 @@ function createHeader(string $tipo, string $nome='') {
         ["../perguntas/perguntas.php", "../img/iconeMenuNav/iconePerguntas","Perguntas"],
         ["../paginasConteudo/paginaConteudo.php", "../img/iconeMenuNav/iconeConteudos","Conteúdos"],
         ["../locaisAtendimento/locaisAtendimento.php", "../img/iconeMenuNav/iconeLocaisAtend","Locais De Atendimento"], 
-        ["../meuPerfil/meuPerfil.php", "../img/iconeMenuNav/iconeMeuPerfil","Meu Pefil"], 
         ["../locaisAtendimento/locaisAtendimento.php", "../img/iconeMenuNav/iconeAcessibilidade","Acessibilidade"], 
     ];
     
@@ -19,6 +18,10 @@ function createHeader(string $tipo, string $nome='') {
 
     if ($tipo == 3) {
         array_push($links, ["../responderPerguntas/responderPerguntas.php",  "../img/iconeMenuNav/iconeResponderPerguntas","Responder Perguntas"]);
+    }
+
+    if ($tipo == 4 ) {
+        array_push($links, ["../meuPerfil/meuPerfil.php", "../img/iconeMenuNav/iconeMeuPerfil","Meu Pefil"], );
     }
 
     echo "
@@ -64,8 +67,6 @@ function createHeader(string $tipo, string $nome='') {
 
             <div class='card-opcoes esconde'>
                 <ul>
-                    <li><a href='#'>Meu Perfil</a></li>
-                    <li><a href='#'>Mais</a></li>
                     <li><a href='../sair.php' style='color: red;'>Sair</a></li>
                 </ul>
             </div>
