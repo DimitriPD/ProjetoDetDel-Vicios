@@ -44,32 +44,25 @@
                         r.esta_anonimo,
                         CAST(r.data_hora_envio AS DATE) as data_envio,
                         ir.descricao_identificacao,
-                        v.descricao_vicio,
-                        v.cod_vicio,
                         c.nome_cidade
                     ',
                     tabela: '
                         tb_relatos r, 
                         tb_usuarios u, 
                         tb_identificacoes_relato ir, 
-                        tb_vicios v, 
-                        tb_relato_vicios rv,
                         tb_cidades c
                     ',
                     condicao: '
-                    (u.cod_usuario = r.cod_usuario_relato AND 
+                    u.cod_usuario = r.cod_usuario_relato AND 
                     r.cod_status_relato = 1 AND 
                     r.cod_identificacao_relato = ir.cod_identificacao_relato AND
-                    (v.cod_vicio = rv.cod_vicio) AND
-                    rv.cod_relato = r.cod_relato) AND
                     c.cod_cidade = u.cod_cidade
                     ',
                     grupo: '
                         u.nome_usuario,
                         r.conteudo_relato,
                         ir.descricao_identificacao,
-                        r.esta_anonimo,
-                        v.descricao_vicio
+                        r.esta_anonimo
                     ',
                     ordena: 'data_envio asc'
                 );
@@ -94,12 +87,30 @@
                                         <div class='identificacao-relato'>
                                             <p>{$row['descricao_identificacao']}</p>
                                         </div>
-                                    </div>
+                                    </div>";
 
+                                    $viciosDB = selectFromDb(
+                                        conn: $conn,
+                                        atributos: '
+                                              tv.descricao_vicio,
+                                              tv.cod_vicio
+                                          ',
+                                        tabela: '
+                                              tb_relato_vicios trv,
+                                              tb_vicios tv
+                                          ',
+                                        condicao: "
+                                              trv.cod_vicio = tv.cod_vicio and 
+                                              trv.cod_relato = {$row['cod_relato']};
+                                          "
+                                      );
+                                echo "
                                     <div class='downtext'>
-                                        <div class='sobre-vicios'>
-                                            <p id='{$row['cod_vicio']}'>{$row['descricao_vicio']}</p>
-                                        </div>
+                                        <div class='sobre-vicios'>";
+                                        while ($rowVicios = mysqli_fetch_assoc($viciosDB)) {
+                                            echo " <p id='{$rowVicios['cod_vicio']}'>{$rowVicios['descricao_vicio']}</p>";
+                                        }
+                                        echo "</div>
                                     </div>
                                 </div>
 

@@ -55,9 +55,12 @@
             $atributosRelato = "$idRelato, {$_SESSION['cod_usuario']}, '{$dadosRelato['conteudo-relato']}', {$dadosRelato['identificacao-selecionada']}, $codStatus, $anonimo, '$hora_envio', null, null, null";
             insertIntoDb(conn: $conn, tabela: 'tb_relatos', valores: $atributosRelato);
 
-            $atributosRelatoVicios = "$idRelato, {$dadosRelato['vicios-selecionados']}";
-            insertIntoDb(conn: $conn, tabela: 'tb_relato_vicios', valores: $atributosRelatoVicios);
+            
 
+            foreach ($dadosRelato['vicios-selecionados'] as $vicioSelecionado) {
+                $atributosRelatoVicios = "$idRelato, $vicioSelecionado";
+                insertIntoDb(conn: $conn, tabela: 'tb_relato_vicios', valores: $atributosRelatoVicios);
+            };
             header('location: ./relatos.php');
         }
     ?>
@@ -67,27 +70,27 @@
             createHeader($_SESSION['tipo_usuario'], $_SESSION['nome_usuario']);
         ?>
 
-            <?php 
-                $itensVicio = selectFromDb(
-                    conn: $conn,
-                    atributos: "*",
-                    tabela: "tb_vicios"
-                );
-                if ($itensVicio) {
-                    echo "
-                        <nav class='filtro-vicio'>       
-                            <p class='titulo-filtro'>Vícios</p>                 
-                            <ul class='list-filtro-vicio'>";
+        <?php 
+            $itensVicio = selectFromDb(
+                conn: $conn,
+                atributos: "*",
+                tabela: "tb_vicios"
+            );
+            if ($itensVicio) {
+                echo "
+                    <nav class='filtro-vicio'>       
+                        <p class='titulo-filtro'>Vícios</p>                 
+                        <ul class='list-filtro-vicio'>";
 
-                            echo "<li class='filtro-vicio-item'> <a href='./relatos.php'> <div class='checkbox'></div> Todos </a> </li>";
-                            while ($row = mysqli_fetch_assoc($itensVicio)) {
-                                echo "<li class='filtro-vicio-item'> <a href='?idFiltro={$row['cod_vicio']}'> <div class='checkbox'></div> {$row['descricao_vicio']} </a> </li>";
-                            };
-                    echo '
-                            </ul>
-                        </nav>';
-                }
-            ?>
+                        echo "<li class='filtro-vicio-item'> <a href='?idFiltro=0'> <div class='checkbox'></div> Todos </a> </li>";
+                        while ($row = mysqli_fetch_assoc($itensVicio)) {
+                            echo "<li class='filtro-vicio-item'> <a href='?idFiltro={$row['cod_vicio']}'> <div class='checkbox'></div> {$row['descricao_vicio']} </a> </li>";
+                        };
+                echo '
+                        </ul>
+                    </nav>';
+            }
+        ?>
 
         <div class="relatos-area">
         <?php 
@@ -130,7 +133,7 @@
                                                         while ($row = mysqli_fetch_assoc($ViciosnNoIcone)) {
                                                             echo "
                                                             <li>
-                                                                <input type='checkbox' name='vicios-selecionados' id='{$row['descricao_vicio']}' value='{$row['cod_vicio']}'> <label for='{$row['descricao_vicio']}'>{$row['descricao_vicio']}</label>
+                                                                <input type='checkbox' name='vicios-selecionados[]' id='{$row['descricao_vicio']}' value='{$row['cod_vicio']}'> <label for='{$row['descricao_vicio']}'>{$row['descricao_vicio']}</label>
                                                             </li>";
                                                         };
                                                     }
@@ -190,26 +193,6 @@
         ?>
 
             <?php 
-                if (isset($_GET['idFiltro'])) {
-                    $condicaoFiltro = " 
-                    (u.cod_usuario = r.cod_usuario_relato AND 
-                    r.cod_status_relato = 3 AND 
-                    r.cod_identificacao_relato = ir.cod_identificacao_relato AND
-                    (v.cod_vicio = rv.cod_vicio AND v.cod_vicio = {$_GET['idFiltro']}) AND
-                    rv.cod_relato = r.cod_relato) AND
-                    c.cod_cidade = u.cod_cidade
-                    ";
-                } else {
-                    $condicaoFiltro = '
-                    (u.cod_usuario = r.cod_usuario_relato AND 
-                    r.cod_status_relato = 3 AND 
-                    r.cod_identificacao_relato = ir.cod_identificacao_relato AND
-                    (v.cod_vicio = rv.cod_vicio) AND
-                    rv.cod_relato = r.cod_relato) AND
-                    c.cod_cidade = u.cod_cidade
-                    ';
-                }
-
                 $resultado =selectFromDb( 
                     conn: $conn,
                     atributos: '
@@ -225,26 +208,26 @@
                             END
                         ) AS upvotes,
                         ir.descricao_identificacao,
-                        v.descricao_vicio,
-                        v.cod_vicio,
                         c.nome_cidade
                     ',
                     tabela: '
                         tb_relatos r, 
                         tb_usuarios u, 
                         tb_identificacoes_relato ir, 
-                        tb_vicios v, 
                         tb_relato_curtidas rc,
-                        tb_relato_vicios rv,
                         tb_cidades c
                     ',
-                    condicao: $condicaoFiltro,
+                    condicao: '
+                    u.cod_usuario = r.cod_usuario_relato AND 
+                    r.cod_status_relato = 3 AND 
+                    r.cod_identificacao_relato = ir.cod_identificacao_relato AND
+                    c.cod_cidade = u.cod_cidade
+                    ',
                     grupo: '
                         u.nome_usuario,
                         r.conteudo_relato,
                         ir.descricao_identificacao,
-                        r.esta_anonimo,
-                        v.descricao_vicio
+                        r.esta_anonimo
                     ',
                     ordena: 'upvotes desc'
                     
@@ -270,12 +253,30 @@
                                         <div class='identificacao-relato'>
                                             <p>{$row['descricao_identificacao']}</p>
                                         </div>
-                                    </div>
+                                    </div>";
+                                    
+                                    $viciosDB = selectFromDb(
+                                        conn: $conn,
+                                        atributos: '
+                                              tv.descricao_vicio,
+                                              tv.cod_vicio
+                                          ',
+                                        tabela: '
+                                              tb_relato_vicios trv,
+                                              tb_vicios tv
+                                          ',
+                                        condicao: "
+                                              trv.cod_vicio = tv.cod_vicio and 
+                                              trv.cod_relato = {$row['cod_relato']};
+                                          "
+                                      );
 
-                                    <div class='downtext'>
-                                        <div class='sobre-vicios'>
-                                            <p id='{$row['cod_vicio']}'>{$row['descricao_vicio']}</p>
-                                        </div>
+                                    echo "<div class='downtext'>
+                                        <div class='sobre-vicios'>";
+                                        while($rowVicios = mysqli_fetch_assoc($viciosDB)) {
+                                            echo "<p id='{$rowVicios['cod_vicio']}' >{$rowVicios['descricao_vicio']}</p>";
+                                        }
+                                        echo "</div>
                                     </div>
                                 </div>
 
@@ -360,6 +361,27 @@
                     check.classList.toggle('marcado')
                 }                
             } )
+
+            const filtroID = "<?php if (isset($_GET['idFiltro'])) {
+                echo $_GET['idFiltro'];
+            } ?>"
+            const relatoList = document.querySelectorAll('.card-relato')
+            relatoList.forEach( (relato, index) => {
+                const relatoTagList = []
+                for (const tag of relato.querySelector('.sobre-vicios').childNodes) {
+                    if ( filtroID == 0 ) {
+                        relatoTagList.push('tem')
+                        break
+                    }
+                    else if (tag.id == filtroID) {
+                        relatoTagList.push(tag.id)
+                    }
+                }                
+                if (relatoTagList.length === 0) {
+                    relato.style.display = 'none'
+                }
+                
+            })
     </script>
 
 </body>
