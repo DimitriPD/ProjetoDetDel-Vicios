@@ -236,7 +236,7 @@
                 if ($resultado) {
                     while ($row = mysqli_fetch_assoc($resultado)) {
                         echo "
-                            <div class='card-relato'>
+                            <div class='card-relato' id='{$row['cod_relato']}'>
                                 <div class='foto-perfil-relato'>
                                     <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
                                 </div>
@@ -318,12 +318,7 @@
                                 </div>
                             </div>";
                     }
-                } else {
-                    echo '<div> 
-                        <h1> Nenhum Relato Encotrado! </h1>    
-                        <h3> Tente Outro Filtro! </h3>
-                    </div>';
-                }
+                } 
             ?>
         </div>
         
@@ -366,6 +361,7 @@
                 echo $_GET['idFiltro'];
             } ?>"
             const relatoList = document.querySelectorAll('.card-relato')
+            const relatosNaoCompativeis= []
             relatoList.forEach( (relato, index) => {
                 const relatoTagList = []
                 for (const tag of relato.querySelector('.sobre-vicios').childNodes) {
@@ -377,11 +373,19 @@
                         relatoTagList.push(tag.id)
                     }
                 }                
+
                 if (relatoTagList.length === 0) {
                     relato.style.display = 'none'
+                    relatosNaoCompativeis.push(relato.id)
                 }
-                
             })
+
+            if (relatosNaoCompativeis.length === relatoList.length) {
+                document.querySelector('.relatos-area').innerHTML += "<div>" + 
+                        "<h1> Nenhum Relato Encotrado! </h1>"  +  
+                        "<h3> Tente Outro Filtro! </h3>" +
+                    "</div>"
+            }
     </script>
 
 </body>

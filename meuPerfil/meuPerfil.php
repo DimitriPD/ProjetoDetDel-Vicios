@@ -94,9 +94,6 @@ include_once(__DIR__ . "/../functions/index.php");
               r.conteudo_relato,
               r.esta_anonimo,
               r.cod_relato,
-              r.cod_usuario_analise,
-              r.data_hora_analise,
-              r.descricao_analise,
               trs.descricao_status_relato ,
               CAST(r.data_hora_envio AS DATE) as data_envio,
               r.data_hora_analise,
@@ -186,7 +183,7 @@ include_once(__DIR__ . "/../functions/index.php");
         <div class='footer-relato'>
             <div class='status-relato'>";
                 if ($rowRelato["descricao_status_relato"] == "REPROVADO") {
-                  echo "<a href='#'><img src='../img/iconesStatus/JUSTIFICATIVA.png' alt='F'></a>";
+                  echo "<div id='icone-justificativa'><img src='../img/iconesStatus/JUSTIFICATIVA.png' alt='F'></div>";
                 }
 
                 echo "<div class='status-relato-icon'>
@@ -211,43 +208,58 @@ include_once(__DIR__ . "/../functions/index.php");
                 </a>
             </div>
         </div>
-        </div>
+        </div>";
         
-        <div class='card-relato justificativa-relato'>
-            <div class='foto-perfil-relato'>
-              <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
-            </div>";
-
-            $usuarioADM = selectFromDb(
+        if ($rowRelato["descricao_status_relato"] == "REPROVADO") {
+          $usuarioADM = selectFromDb(
               conn: $conn,
               atributos: "
-                u.nome_usuario
+                u.nome_usuario,
+                CAST(r.data_hora_analise AS DATE) AS data_analise,
+                r.descricao_analise
               ",
-              tabela:"
-              tb_usuarios u",
+              tabela: "
+                tb_usuarios u,
+                tb_relatos r
+              ",
               condicao: "
-              u.cod_usuario = {$rowRelato['cod_usuario_analise']} 
+                r.cod_relato = {$rowRelato['cod_relato']} AND
+                r.cod_usuario_analise = u.cod_usuario
               "
-            );
+          );
 
-            echo "<div class='header-relato'>";
+          echo "
+          <div class='justificativa-relato esconde'>
+            <div class='foto-perfil-relato'>
+              <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt=''>
+            </div>
+
+            <div class='header-justificativa'>";
             if ($usuarioADM) {
-              $infoUsuarioAD = mysqli_fetch_assoc($usuarioADM);
+              $infoUsuarioADM = mysqli_fetch_assoc($usuarioADM);
 
               echo "
-                <p>{$infoUsuarioAD['nome_usuario']}</p>
-                <p>Administrador</p>
-              ";
-            };
-              
-            echo "</div>
-            <div class='conteudo-relato'>
-              <p>{$rowRelato['descricao_analise']}</p>
-              <p>{$rowRelato['data_hora_analise']}</p>
+              <p>{$infoUsuarioADM['nome_usuario']}</p>
+              <div class='identificacao-relato'>
+                <p class=''>Administrador</p>
+              </div>
             </div>
-        </div>
-        ";
+
+            <div class='conteudo-relato'>
+              <div class='conteudo'>
+                <p>{$infoUsuarioADM['descricao_analise']}</p>
+              </div>
+              <div class='data-cidade-relato'>
+                <p>{$infoUsuarioADM['data_analise']}</p>
+              </div>
+            </div>
+              ";
+            }
+            echo "
+          </div>
+          ";
           }
+        }
         } else {
           echo '<div> 
                     <h1> Você não enviou nenhum relato! </h1>
@@ -320,11 +332,16 @@ include_once(__DIR__ . "/../functions/index.php");
     document.querySelector('#formEditaDeleta').addEventListener("submit", (event) => {
       const conteudoRelato = document.querySelector("#conteudo-relato").value
 
-      if (conteudoRelato.trim() === '' || conteudoRelato.length < 20 || conteudoRelato.length > 3000) {
+      if (conteudoRelato.trim() === '' || conteudoRelato.trim().length < 20 || conteudoRelato.length > 3000) {
         event.preventDefault()
         alert("Relato deve ter 20 caracteres no minimo!")
         return
       }
+    })
+  </script>
+  <script>
+    document.querySelector("#icone-justificativa").addEventListener('click', () => {
+      document.querySelector(".justificativa-relato").classList.toggle('esconde')
     })
   </script>
 </body>

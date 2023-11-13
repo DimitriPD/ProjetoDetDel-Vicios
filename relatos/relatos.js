@@ -19,7 +19,7 @@ function enviarRelato(event) {
     const viciosList = document.querySelector('#icone-vicios').querySelectorAll("ul input")
     const identificacoesList = document.querySelector('#icone-identificacoes').querySelectorAll("ul input")
 
-    if (conteudo.trim() === '' || conteudo.length < 20 || conteudo.length > 3000) {
+    if (conteudo.trim() === '' || conteudo.trim().length < 20 || conteudo.length > 3000) {
         event.preventDefault()
         alert("O relato deve ter no mínimo 20 caracteres")
         return

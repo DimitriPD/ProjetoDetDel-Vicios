@@ -89,7 +89,7 @@
 
 /* --------------------------------------------------- */
 
-.card-relato {
+.card-relato, .justificativa-relato {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -114,12 +114,13 @@
 
 .header-relato,
 .conteudo-relato,
-.footer-relato {
+.footer-relato,
+.header-justificativa {
   padding: 5px 0;
   padding-inline: 40px 20px;
 }
 
-.header-relato {
+.header-relato, .header-justificativa {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -209,9 +210,9 @@
   gap: 10px;
 }
 
-.relato-botoes-excluir {
+.relato-botoes-excluir, .relato-botoes-editar {
   display: flex;
-  padding: 0px 10px;
+  padding: 3px 10px;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -224,17 +225,7 @@
 }
 
 .relato-botoes-editar {
-  display: flex;
-  padding: 0px 10px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 5px;
-  border: 1px solid #000;
-  background: rgba(3, 168, 30, 0.7);
-  text-decoration: none;
-  text-align: center;
-  color: white;
+  background: rgba(3, 77, 15, 0.7);
 }
 /* --------------------------------------------------- */
 
@@ -402,6 +393,22 @@
 }
 
 
+
+/* ------------------------------- */
+
+.justificativa-relato {
+  display: block;
+  width: 85%;
+  align-self: flex-end;
+}
+
+.header-justificativa {
+  flex-direction: row;
+}
+
+#icone-justificativa {
+  cursor: pointer;
+}
 
 .esconde {
   display: none;
