@@ -342,6 +342,12 @@ include_once(__DIR__ . "/../functions/index.php");
   <script>
     document.querySelector("#icone-justificativa").addEventListener('click', () => {
       document.querySelector(".justificativa-relato").classList.toggle('esconde')
+
+      if ((document.querySelector(".justificativa-relato").classList.contains("esconde"))) {
+        document.querySelector("#icone-justificativa img").setAttribute("src", "../img/iconesStatus/JUSTIFICATIVA.png")
+      } else {
+        document.querySelector("#icone-justificativa img").setAttribute("src", "../img/iconesStatus/JUSTIFICATIVA_CLICADA.png")
+      }
     })
   </script>
 </body>
