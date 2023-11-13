@@ -94,6 +94,9 @@ include_once(__DIR__ . "/../functions/index.php");
               r.conteudo_relato,
               r.esta_anonimo,
               r.cod_relato,
+              r.cod_usuario_analise,
+              r.data_hora_analise,
+              r.descricao_analise,
               trs.descricao_status_relato ,
               CAST(r.data_hora_envio AS DATE) as data_envio,
               r.data_hora_analise,
@@ -181,9 +184,13 @@ include_once(__DIR__ . "/../functions/index.php");
                 </div>
 
         <div class='footer-relato'>
-            <div class='status-relato'>
-                <div class='status-relato-icon'>
-                    <img src='../img/iconesStatus/{$rowRelato['descricao_status_relato']}.png' alt='F'>
+            <div class='status-relato'>";
+                if ($rowRelato["descricao_status_relato"] == "REPROVADO") {
+                  echo "<a href='#'><img src='../img/iconesStatus/JUSTIFICATIVA.png' alt='F'></a>";
+                }
+
+                echo "<div class='status-relato-icon'>
+                  <img src='../img/iconesStatus/{$rowRelato['descricao_status_relato']}.png' alt='F'>
                 </div>
                 {$rowRelato['descricao_status_relato']}
             </div>
@@ -204,6 +211,40 @@ include_once(__DIR__ . "/../functions/index.php");
                 </a>
             </div>
         </div>
+        </div>
+        
+        <div class='card-relato justificativa-relato'>
+            <div class='foto-perfil-relato'>
+              <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCu9WdinxWc7EOwkm-nBtKcoAfX3OwWi_Z-yfAgHo&s' alt='f'>
+            </div>";
+
+            $usuarioADM = selectFromDb(
+              conn: $conn,
+              atributos: "
+                u.nome_usuario
+              ",
+              tabela:"
+              tb_usuarios u",
+              condicao: "
+              u.cod_usuario = {$rowRelato['cod_usuario_analise']} 
+              "
+            );
+
+            echo "<div class='header-relato'>";
+            if ($usuarioADM) {
+              $infoUsuarioAD = mysqli_fetch_assoc($usuarioADM);
+
+              echo "
+                <p>{$infoUsuarioAD['nome_usuario']}</p>
+                <p>Administrador</p>
+              ";
+            };
+              
+            echo "</div>
+            <div class='conteudo-relato'>
+              <p>{$rowRelato['descricao_analise']}</p>
+              <p>{$rowRelato['data_hora_analise']}</p>
+            </div>
         </div>
         ";
           }

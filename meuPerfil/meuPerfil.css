@@ -185,11 +185,14 @@
   display: flex;
   padding: 5px 5px 0px 5px;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   border-radius: 5px;
 }
 
 .status-relato-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 10.949px;
   height: 17.336px;
   fill: #000;
